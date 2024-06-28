@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+}
+
+@font-face {
+  font-family: "FoglihtenNo06";
+  src: url("/assets/fonts/foglihtenno06.woff2") format("woff2"),
+    url("/assets/fonts/foglihtenno06.woff") format("woff"),
+    url("/assets/fonts/foglihtenno06.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "roboto-regular";
+  src: url("/assets/fonts/roboto-regular.woff2") format("woff2"),
+    url("/assets/fonts/roboto-regular.woff") format("woff"),
+    url("/assets/fonts/roboto-regular.ttf") format("truetype");
+}
+
+body {
+  font-family: "roboto-regular";
+  font-size: 50px;
+  color: black;
+  background-color: #e5e5e5e5;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  line-height: 1.5;
+}
+
+.main {
+  display: flex;
+  margin: 35px 40px;
+}
+
+.link {
+  display: contents;
+}
+
+.main_title {
+  color: white;
+  font-size: 50px;
+}
+
+.header {
+  background-color: #277db4;
+  display: flex;
+  align-items: center;
+  padding: 30px 15px;
+  justify-content: space-between;
+  font-family: "FoglihtenNo06";
+}
+
+.container {
+  font-size: 17px;
+  margin: 30px;
+}
+
+.footer {
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+}

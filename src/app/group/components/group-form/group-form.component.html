@@ -1,0 +1,27 @@
+<div class="add-pg">
+  <div>
+    <a routerLink="/groups" class="back-btn">
+      <img src="/assets/img/left.png" />
+    </a>
+  </div>
+
+  <div>
+    <form class="add-form" (submit)="handleSubmit($event)">
+      <input
+        class="add-input"
+        type="text"
+        placeholder="Введите № группы"
+        [(ngModel)]="group.name"
+        required
+        pattern="[0-9]*"
+        maxlength="8"
+        name="name"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+      />
+      <button type="submit" class="add-submit-btn">
+        <img [src]="icon" class="submit-btn" />
+      </button>
+    </form>
+  </div>
+  <div></div>
+</div>

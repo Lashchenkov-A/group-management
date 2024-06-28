@@ -1,0 +1,34 @@
+<div>
+  <a routerLink="/group/add" class="add-new">
+    <img src="/assets/img/add.png" />
+  </a>
+</div>
+<div class="groupListContainer">
+  <div *ngFor="let group of groups" class="groupListItem">
+    <span>{{ group.name }}</span>
+    <a class="editButton" routerLink="/group/{{ group.id }}">
+      <img
+        src="/assets/img/document.png"
+        alt="Редактировать"
+        class="editImage"
+      />
+    </a>
+
+    <button
+      class="deleteButton"
+      (click)="deleteGroup(group)"
+      [disabled]="loading[group.id]"
+    >
+      <ng-container *ngIf="loading[group.id]; else notLoading">
+        <app-loader></app-loader>
+      </ng-container>
+      <ng-template #notLoading>
+        <img
+          src="../assets/img/crossed.png"
+          alt="Удалить"
+          class="deleteImage"
+        />
+      </ng-template>
+    </button>
+  </div>
+</div>
