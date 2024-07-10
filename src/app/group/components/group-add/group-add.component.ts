@@ -1,9 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { GroupService } from '../../../core/group/group.service';
-import { GroupFormModel } from '../components/group-form/group-form.component';
-import { UIService } from '../../../core/common/ui.service';
-
+import { GroupService } from '../../../../core/group/group.service';
+import { GroupFormModel } from '../group-form/group-form.component';
+import { UIService } from '../../../../core/common/services/ui.service';
 @Component({
   selector: 'app-group-add',
   templateUrl: './group-add.component.html',

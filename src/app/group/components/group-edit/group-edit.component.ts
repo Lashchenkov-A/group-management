@@ -1,15 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { GroupService } from '../../../core/group/group.service';
-import { Group } from '../../../core/group/group.model';
-import { GroupFormModel } from '../components/group-form/group-form.component';
-import { TuiDialogService } from '@taiga-ui/core';
-import { UIService } from '../../../core/common/ui.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { GroupService } from '../../../../core/group/group.service';
+import { Group } from '../../../../core/group/group.model';
+import { GroupFormModel } from '../group-form/group-form.component';
+import { TuiDialogContext } from '@taiga-ui/core';
+import { UIService } from '../../../../core/common/services/ui.service';
+import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 
 @Component({
   selector: 'app-group-edit',
@@ -20,19 +15,15 @@ export class GroupEditComponent implements OnInit {
   group: Group | null = null;
 
   constructor(
-    private route: ActivatedRoute,
-    public router: Router,
     private groupService: GroupService,
-    private readonly ui: UIService
+    private readonly ui: UIService,
+    @Inject(POLYMORPHEUS_CONTEXT)
+    private readonly context: TuiDialogContext<void, { groupId: number }>
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const groupId = +params.get('id')!;
-      if (groupId) {
-        this.fetchGroupDetails(groupId);
-      }
-    });
+    const groupId = this.context.data.groupId;
+    this.fetchGroupDetails(groupId);
   }
 
   fetchGroupDetails(groupId: number): void {
@@ -51,7 +42,7 @@ export class GroupEditComponent implements OnInit {
       this.groupService.updateGroup(this.group.id, formValues).subscribe(
         () => {
           this.ui.showAlert('Группа успешно изменена!');
-          this.router.navigate(['/groups']);
+          this.context.completeWith();
         },
         (error) => {
           this.showErrorMessage();

@@ -1,34 +1,48 @@
-<div>
-  <a routerLink="/group/add" class="add-new">
-    <img src="/assets/img/add.png" />
-  </a>
-</div>
-<div class="groupListContainer">
-  <div *ngFor="let group of groups" class="groupListItem">
-    <span>{{ group.name }}</span>
-    <a class="editButton" routerLink="/group/{{ group.id }}">
-      <img
-        src="/assets/img/document.png"
-        alt="Редактировать"
-        class="editImage"
-      />
-    </a>
+<div class="group-list-container">
+  <a class="add-new" (click)="openAddGroup(group)"> Добавить Группу </a>
+  <table tuiTable class="table" [columns]="columns">
+    <thead>
+      <tr tuiThGroup>
+        <th tuiTh [resizable]="true">Имя группы</th>
+        <th tuiTh></th>
+      </tr>
+    </thead>
+    <tbody tuiTbody [data]="groups">
+      <tr *ngFor="let group of groups" tuiTr>
+        <td *tuiCell="'name'" tuiTd>
+          {{ group.name }}
+        </td>
+        <td *tuiCell="'actions'" tuiTd>
+          <a class="edit-button" (click)="openEditGroup(group)">
+            Редактировать
+          </a>
 
-    <button
-      class="deleteButton"
-      (click)="deleteGroup(group)"
-      [disabled]="loading[group.id]"
-    >
-      <ng-container *ngIf="loading[group.id]; else notLoading">
-        <app-loader></app-loader>
-      </ng-container>
-      <ng-template #notLoading>
-        <img
-          src="../assets/img/crossed.png"
-          alt="Удалить"
-          class="deleteImage"
-        />
-      </ng-template>
-    </button>
-  </div>
+          <button
+            class="delete-button"
+            (click)="deleteGroup(group)"
+            [disabled]="loading[group.id]"
+          >
+            <ng-container *ngIf="loading[group.id]; else notLoading">
+              <app-loader></app-loader>
+            </ng-container>
+            <ng-template #notLoading> Удалить </ng-template>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="pagingInfo">
+      <tr>
+        <td [colSpan]="columns.length">
+          <tui-table-pagination
+            [total]="pagingInfo.total || 0"
+            [size]="pagingInfo.pageSize"
+            [items]="[2, 5, 10, 15]"
+            (pageChange)="onPageChange($event)"
+            (sizeChange)="onSizeChange($event)"
+          ></tui-table-pagination>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <div></div>
 </div>

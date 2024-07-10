@@ -12,7 +12,7 @@ export interface GroupFormModel {
 })
 export class GroupFormComponent implements OnInit {
   @Input() onSubmit!: (values: GroupFormModel) => void;
-  @Input() icon: string = '/assets/img/addList.png';
+  @Input() icon: string = '';
   @Input() group: GroupFormModel = { name: '' };
 
   constructor(public router: Router) {}

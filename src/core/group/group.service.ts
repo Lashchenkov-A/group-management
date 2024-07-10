@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Group } from './group.model';
 import { environment } from '../../environment/environment';
+import { Paged } from '../common/models/pages.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,11 @@ export class GroupService {
 
   constructor(private http: HttpClient) {}
 
-  getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(this.apiPath);
+  getGroups(page: number = 1, pageSize = 10): Observable<Paged<Group>> {
+    let params = new HttpParams();
+    params = params.append('page', page);
+    params = params.append('pageSize', pageSize);
+    return this.http.get<Paged<Group>>(this.apiPath, { params: params });
   }
 
   deleteGroup(id: number): Observable<void> {

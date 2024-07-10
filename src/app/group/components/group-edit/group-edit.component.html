@@ -1,6 +1,6 @@
+<h2>Редактирование группы {{ group?.name }}</h2>
 <app-group-form
   *ngIf="group"
   [onSubmit]="updateGroup.bind(this)"
-  icon="/assets/img/check.png"
   [group]="{ name: group.name }"
 ></app-group-form>
