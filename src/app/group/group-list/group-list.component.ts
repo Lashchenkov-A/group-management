@@ -54,7 +54,6 @@ export class GroupListComponent implements OnInit {
   }
 
   onPageChange(data: number) {
-    console.log('page');
     if (this.pagingInfo) {
       this.fetchGroups(data + 1, this.pagingInfo.pageSize);
     }

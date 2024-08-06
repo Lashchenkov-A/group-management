@@ -1,0 +1,58 @@
+<div class="lesson-list-container">
+  <tui-table-bar>
+    <tui-button class="add-button" appearance="icon" (click)="showDialog()">
+      <tui-svg src="tuiIconPlusCircleLarge"></tui-svg>
+    </tui-button>
+  </tui-table-bar>
+
+  <tui-table>
+    <thead tuiThGroup>
+      <tr>
+        <th tuiTh>Year</th>
+        <th tuiTh>Week</th>
+        <th tuiTh>Day</th>
+        <th tuiTh>Start Time</th>
+        <th tuiTh>End Time</th>
+        <th tuiTh>Teacher</th>
+        <th tuiTh>Group</th>
+        <th tuiTh>Subject</th>
+        <th tuiTh>Office</th>
+        <th tuiTh>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let lesson of lessons">
+        <td tuiTd>{{ lesson.year }}</td>
+        <td tuiTd>{{ lesson.week }}</td>
+        <td tuiTd>{{ lesson.dayOfWeek }}</td>
+        <td tuiTd>{{ lesson.startTime }}</td>
+        <td tuiTd>{{ lesson.endTime }}</td>
+        <td tuiTd>
+          {{ lesson.teacher.jobRole }} {{ lesson.teacher.firstName }}
+          {{ lesson.teacher.secondName }}
+          {{ lesson.teacher.lastName }}
+        </td>
+        <td tuiTd>{{ lesson.groupName }}</td>
+        <td tuiTd>{{ lesson.subjectName }}</td>
+        <td tuiTd>{{ lesson.corpusNumber }} {{ lesson.classroomNumber }}</td>
+        <td tuiTd>
+          <tui-button
+            appearance="icon"
+            (click)="editLesson(lesson.id)"
+            class="edit-button"
+          >
+            <tui-svg src="tuiIconEditLarge"></tui-svg>
+          </tui-button>
+          <tui-button
+            appearance="icon"
+            (click)="deleteLesson(lesson)"
+            class="delete-button"
+          >
+            <tui-svg src="tuiIconTrashLarge"></tui-svg>
+          </tui-button>
+        </td>
+      </tr>
+    </tbody>
+  </tui-table>
+  <div></div>
+</div>

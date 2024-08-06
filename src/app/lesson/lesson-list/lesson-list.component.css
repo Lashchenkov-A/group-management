@@ -1,0 +1,16 @@
+.lesson-list-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-button {
+  cursor: pointer;
+}
+
+.edit-button {
+  cursor: pointer;
+}
+
+.add-button {
+  cursor: pointer;
+}
