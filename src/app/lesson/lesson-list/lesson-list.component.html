@@ -34,11 +34,13 @@
         </td>
         <td tuiTd>{{ lesson.groupName }}</td>
         <td tuiTd>{{ lesson.subjectName }}</td>
-        <td tuiTd>{{ lesson.corpusNumber }} {{ lesson.classroomNumber }}</td>
+        <td tuiTd>
+          Корпус {{ lesson.corpusNumber }} Кабинет {{ lesson.classroomNumber }}
+        </td>
         <td tuiTd>
           <tui-button
             appearance="icon"
-            (click)="editLesson(lesson.id)"
+            (click)="showDialogs(lesson.id)"
             class="edit-button"
           >
             <tui-svg src="tuiIconEditLarge"></tui-svg>
@@ -53,6 +55,19 @@
         </td>
       </tr>
     </tbody>
+    <tfoot *ngIf="pagingInfo">
+      <tr>
+        <td [colSpan]="columns.length">
+          <tui-table-pagination
+            [total]="pagingInfo.total || 0"
+            [size]="pagingInfo.pageSize"
+            [items]="[5, 10, 15, 20, 25, 30]"
+            (pageChange)="onPageChange($event)"
+            (sizeChange)="onSizeChange($event)"
+          ></tui-table-pagination>
+        </td>
+      </tr>
+    </tfoot>
   </tui-table>
   <div></div>
 </div>

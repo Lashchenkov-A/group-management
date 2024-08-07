@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environment/environment';
+import { Paged } from '../common/models/pages.model';
+import { Lesson } from './lesson.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +13,13 @@ export class LessonService {
 
   constructor(private http: HttpClient) {}
 
-  getLessons(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiPath}lesson`);
+  getLessons(page: number = 1, pageSize = 10): Observable<Paged<Lesson>> {
+    let params = new HttpParams();
+    params = params.append('page', page);
+    params = params.append('pageSize', pageSize);
+    return this.http.get<Paged<Lesson>>(`${this.apiPath}lesson`, {
+      params: params,
+    });
   }
 
   getLookupData(type: string): Observable<any[]> {
@@ -40,7 +47,7 @@ export class LessonService {
   }
 
   editLesson(id: number, lessonData: any): Observable<any> {
-    return this.http.put(`${this.apiPath}/${id}`, lessonData);
+    return this.http.put(`${this.apiPath}lesson/${id}`, lessonData);
   }
 
   deleteLesson(id: number): Observable<void> {

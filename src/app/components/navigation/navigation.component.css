@@ -1,0 +1,10 @@
+.tabs {
+  color: var(--tui-link);
+
+  --tui-active-color: var(--tui-accent);
+  background-color: #3c4ee900;
+}
+
+.container {
+  gap: 15px;
+}

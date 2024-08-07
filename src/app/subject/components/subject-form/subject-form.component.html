@@ -1,0 +1,19 @@
+<form class="form" (submit)="handleSubmit($event)">
+  <tui-input
+    tuiAutoFocus
+    tuiTextfieldSize="m"
+    type="text"
+    [(ngModel)]="subject.name"
+    required
+    pattern="[0-9]*"
+    maxlength="8"
+    name="name"
+    style="margin: 10px"
+  >
+    Название предмета
+    <input placeholder="Введите название предмета" tuiTextfield type="text" />
+  </tui-input>
+  <button appearance="primary" tuiButton type="submit">
+    <img [src]="icon" class="btn-icon" /> Сохранить
+  </button>
+</form>

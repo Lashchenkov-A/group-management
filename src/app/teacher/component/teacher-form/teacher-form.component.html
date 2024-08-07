@@ -1,0 +1,73 @@
+<form class="form" (submit)="handleSubmit($event)">
+  <tui-input
+    tuiAutoFocus
+    tuiTextfieldSize="m"
+    type="text"
+    [(ngModel)]="teacher.firstName"
+    required
+    pattern="[0-9]*"
+    maxlength="8"
+    name="corpusNumber"
+    style="margin: 10px"
+  >
+    Имя
+    <input placeholder="Введите имя преподавателя" tuiTextfield type="text" />
+  </tui-input>
+  <tui-input
+    tuiAutoFocus
+    tuiTextfieldSize="m"
+    type="text"
+    [(ngModel)]="teacher.secondName"
+    required
+    pattern="[0-9]*"
+    maxlength="8"
+    name="classroomNumber"
+    style="margin: 10px"
+  >
+    Отчество
+    <input
+      placeholder="Введите отчество преподавателя"
+      tuiTextfield
+      type="text"
+    />
+  </tui-input>
+  <tui-input
+    tuiAutoFocus
+    tuiTextfieldSize="m"
+    type="text"
+    [(ngModel)]="teacher.lastName"
+    required
+    pattern="[0-9]*"
+    maxlength="8"
+    name="lastName"
+    style="margin: 10px"
+  >
+    Фамилия
+    <input
+      placeholder="Введите фамилию преподавателя"
+      tuiTextfield
+      type="text"
+    />
+  </tui-input>
+  <tui-input
+    tuiAutoFocus
+    tuiTextfieldSize="m"
+    type="text"
+    [(ngModel)]="teacher.jobRole"
+    required
+    pattern="[0-9]*"
+    maxlength="8"
+    name="jobRole"
+    style="margin: 10px"
+  >
+    Должность
+    <input
+      placeholder="Введите должность преподавателя"
+      tuiTextfield
+      type="text"
+    />
+  </tui-input>
+  <button appearance="primary" tuiButton type="submit">
+    <img [src]="icon" class="btn-icon" /> Сохранить
+  </button>
+</form>

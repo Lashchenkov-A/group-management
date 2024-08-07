@@ -1,0 +1,12 @@
+<h2>
+  Редактирование кабинета {{ office?.classroomNumber }} корпус
+  {{ office?.corpusNumber }}
+</h2>
+<app-office-form
+  *ngIf="office"
+  [onSubmit]="updateOffice.bind(this)"
+  [office]="{
+    corpusNumber: office.corpusNumber,
+    classroomNumber: office.classroomNumber
+  }"
+></app-office-form>

@@ -1,0 +1,67 @@
+<div class="office-list-container">
+  <tui-table-bar>
+    <tui-button
+      class="add-button"
+      appearance="icon"
+      (click)="openAddOffice(office)"
+    >
+      <tui-svg src="tuiIconPlusCircleLarge"></tui-svg>
+    </tui-button>
+  </tui-table-bar>
+
+  <table tuiTable class="table" [columns]="columns">
+    <thead>
+      <tr tuiThOffice>
+        <th tuiTh [resizable]="true">Corpus Number</th>
+        <th tuiTh [resizable]="true">Classroom Number</th>
+        <th tuiTh>Actions</th>
+      </tr>
+    </thead>
+    <tbody tuiTbody [data]="offices">
+      <tr *ngFor="let office of offices" tuiTr>
+        <td *tuiCell="'corpusNumber'" tuiTd>
+          {{ office.corpusNumber }}
+        </td>
+        <td *tuiCell="'classroomNumber'" tuiTd>
+          {{ office.classroomNumber }}
+        </td>
+        <td *tuiCell="'actions'" tuiTd>
+          <tui-button
+            appearance="icon"
+            (click)="openEditOffice(office)"
+            class="edit-button"
+          >
+            <tui-svg src="tuiIconEditLarge"></tui-svg>
+          </tui-button>
+
+          <tui-button
+            appearance="icon"
+            (click)="deleteOffice(office)"
+            class="delete-button"
+          >
+            <tui-svg src="tuiIconTrashLarge"></tui-svg>
+
+            <ng-container *ngIf="loading[office.id]; else notLoading">
+              <app-loader></app-loader>
+            </ng-container>
+            <ng-template #notLoading></ng-template>
+          </tui-button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="pagingInfo">
+      <tr>
+        <td [colSpan]="columns.length">
+          <tui-table-pagination
+            [total]="pagingInfo.total || 0"
+            [size]="pagingInfo.pageSize"
+            [items]="[2, 5, 10, 15]"
+            (pageChange)="onPageChange($event)"
+            (sizeChange)="onSizeChange($event)"
+          ></tui-table-pagination>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <div></div>
+</div>

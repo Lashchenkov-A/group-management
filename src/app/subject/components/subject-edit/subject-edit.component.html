@@ -1,0 +1,6 @@
+<h2>Редактирование предмета "{{ subject?.name }}"</h2>
+<app-subject-form
+  *ngIf="subject"
+  [onSubmit]="updateSubject.bind(this)"
+  [subject]="{ name: subject.name }"
+></app-subject-form>

@@ -1,0 +1,33 @@
+<form class="form" (submit)="handleSubmit($event)">
+  <tui-input
+    tuiAutoFocus
+    tuiTextfieldSize="m"
+    type="text"
+    [(ngModel)]="office.corpusNumber"
+    required
+    pattern="[0-9]*"
+    maxlength="8"
+    name="corpusNumber"
+    style="margin: 10px"
+  >
+    № корпуса
+    <input placeholder="Введите № корпуса" tuiTextfield type="text" />
+  </tui-input>
+  <tui-input
+    tuiAutoFocus
+    tuiTextfieldSize="m"
+    type="text"
+    [(ngModel)]="office.classroomNumber"
+    required
+    pattern="[0-9]*"
+    maxlength="8"
+    name="classroomNumber"
+    style="margin: 10px"
+  >
+    № кабинета
+    <input placeholder="Введите № кабинета" tuiTextfield type="text" />
+  </tui-input>
+  <button appearance="primary" tuiButton type="submit">
+    <img [src]="icon" class="btn-icon" /> Сохранить
+  </button>
+</form>

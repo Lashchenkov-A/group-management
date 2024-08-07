@@ -1,0 +1,14 @@
+<h2>
+  Редактирование преподавателя {{ teacher?.jobRole }} {{ teacher?.firstName }}
+  {{ teacher?.secondName }} {{ teacher?.lastName }}
+</h2>
+<app-teacher-form
+  *ngIf="teacher"
+  [onSubmit]="updateTeacher.bind(this)"
+  [teacher]="{
+        firstName: teacher.firstName,
+        secondName: teacher.secondName,
+        lastName: teacher.lastName,
+        jobRole: teacher.jobRole,
+    }"
+></app-teacher-form>

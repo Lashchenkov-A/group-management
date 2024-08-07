@@ -9,7 +9,8 @@ import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { Paged } from '../../../core/common/models/pages.model';
 import { Lesson } from '../../../core/lesson/lesson.model';
-import { AddLessonDialogComponent } from '../components/lesson-add/lesson-add.component';
+import { LessonAddComponent } from '../components/lesson-add/lesson-add.component';
+import { LessonEditComponent } from '../components/lesson-edit/lesson-edit.component';
 
 @Component({
   selector: 'app-lesson-list',
@@ -36,7 +37,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.fetchLessons();
+    this.fetchLessons(1, 10);
   }
 
   ngOnDestroy(): void {
@@ -44,10 +45,22 @@ export class LessonListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  fetchLessons(): void {
-    this.lessonService.getLessons().subscribe(
+  onPageChange(data: number) {
+    if (this.pagingInfo) {
+      this.fetchLessons(data + 1, this.pagingInfo.pageSize);
+    }
+  }
+
+  onSizeChange(data: number) {
+    if (this.pagingInfo) {
+      this.pagingInfo.pageSize = data;
+    }
+  }
+  fetchLessons(page: number, pageSize: number): void {
+    this.lessonService.getLessons(page, pageSize).subscribe(
       (res) => {
-        this.lessons = res;
+        this.lessons = res.data;
+        this.pagingInfo = { ...res, data: [] };
       },
       (error) => console.error('Ошибка при запросе:', error)
     );
@@ -55,7 +68,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
 
   showDialog(): void {
     const dialogRef = this.dialogs.open<number>(
-      new PolymorpheusComponent(AddLessonDialogComponent, this.injector),
+      new PolymorpheusComponent(LessonAddComponent, this.injector),
       {
         dismissible: true,
         label: 'Добавить пару',
@@ -72,8 +85,24 @@ export class LessonListComponent implements OnInit, OnDestroy {
     });
   }
 
-  editLesson(id: number): void {
-    this.router.navigate(['/lessons/edit', id]);
+  showDialogs(lessonId: number): void {
+    const dialogRef = this.dialogs.open<number>(
+      new PolymorpheusComponent(LessonEditComponent, this.injector),
+      {
+        dismissible: true,
+        label: 'Редактировать пару',
+        data: { lessonId },
+      }
+    );
+
+    dialogRef.subscribe({
+      next: (data) => {
+        console.info(`Dialog emitted data = ${data}`);
+      },
+      complete: () => {
+        console.info('Dialog closed');
+      },
+    });
   }
 
   deleteLesson(lesson: Lesson): void {
@@ -86,7 +115,10 @@ export class LessonListComponent implements OnInit, OnDestroy {
           this.lessonService.deleteLesson(id).subscribe({
             next: () => {
               this.ui.showAlert(`Занятие успешно удалено`);
-              this.fetchLessons();
+              this.fetchLessons(
+                this.pagingInfo!.page,
+                this.pagingInfo!.pageSize
+              );
               delete this.loading[id];
             },
             error: (error) => {

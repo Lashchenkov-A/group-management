@@ -1,0 +1,75 @@
+<div class="teacher-list-container">
+  <tui-table-bar>
+    <tui-button
+      class="add-button"
+      appearance="icon"
+      (click)="openAddTeacher(teacher)"
+    >
+      <tui-svg src="tuiIconPlusCircleLarge"></tui-svg>
+    </tui-button>
+  </tui-table-bar>
+
+  <table tuiTable class="table" [columns]="columns">
+    <thead>
+      <tr tuiThTeacher>
+        <th tuiTh [resizable]="true">firstName</th>
+        <th tuiTh [resizable]="true">secondName</th>
+        <th tuiTh [resizable]="true">lastName</th>
+        <th tuiTh [resizable]="true">jobRole</th>
+        <th tuiTh>Actions</th>
+      </tr>
+    </thead>
+    <tbody tuiTbody [data]="teachers">
+      <tr *ngFor="let teacher of teachers" tuiTr>
+        <td *tuiCell="'jobRole'" tuiTd>
+          {{ teacher.jobRole }}
+        </td>
+        <td *tuiCell="'firstName'" tuiTd>
+          {{ teacher.firstName }}
+        </td>
+        <td *tuiCell="'secondName'" tuiTd>
+          {{ teacher.secondName }}
+        </td>
+        <td *tuiCell="'lastName'" tuiTd>
+          {{ teacher.lastName }}
+        </td>
+        <td *tuiCell="'actions'" tuiTd>
+          <tui-button
+            appearance="icon"
+            (click)="openEditTeacher(teacher)"
+            class="edit-button"
+          >
+            <tui-svg src="tuiIconEditLarge"></tui-svg>
+          </tui-button>
+
+          <tui-button
+            appearance="icon"
+            (click)="deleteTeacher(teacher)"
+            class="delete-button"
+          >
+            <tui-svg src="tuiIconTrashLarge"></tui-svg>
+
+            <ng-container *ngIf="loading[teacher.id]; else notLoading">
+              <app-loader></app-loader>
+            </ng-container>
+            <ng-template #notLoading></ng-template>
+          </tui-button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="pagingInfo">
+      <tr>
+        <td [colSpan]="columns.length">
+          <tui-table-pagination
+            [total]="pagingInfo.total || 0"
+            [size]="pagingInfo.pageSize"
+            [items]="[2, 5, 10, 15]"
+            (pageChange)="onPageChange($event)"
+            (sizeChange)="onSizeChange($event)"
+          ></tui-table-pagination>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <div></div>
+</div>

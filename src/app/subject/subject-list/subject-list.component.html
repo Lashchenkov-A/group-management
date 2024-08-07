@@ -1,0 +1,62 @@
+<div class="subject-list-container">
+  <tui-table-bar>
+    <tui-button
+      class="add-button"
+      appearance="icon"
+      (click)="openAddSubject(subject)"
+    >
+      <tui-svg src="tuiIconPlusCircleLarge"></tui-svg>
+    </tui-button>
+  </tui-table-bar>
+  <table tuiTable class="table" [columns]="columns">
+    <thead>
+      <tr tuiThSubject>
+        <th tuiTh [resizable]="true">Name Group</th>
+        <th tuiTh></th>
+      </tr>
+    </thead>
+    <tbody tuiTbody [data]="subjects">
+      <tr *ngFor="let subject of subjects" tuiTr>
+        <td *tuiCell="'name'" tuiTd>
+          {{ subject.name }}
+        </td>
+        <td *tuiCell="'actions'" tuiTd>
+          <tui-button
+            appearance="icon"
+            (click)="openEditSubject(subject)"
+            class="edit-button"
+          >
+            <tui-svg src="tuiIconEditLarge"></tui-svg>
+          </tui-button>
+
+          <tui-button
+            appearance="icon"
+            (click)="deleteSubject(subject)"
+            class="delete-button"
+          >
+            <tui-svg src="tuiIconTrashLarge"></tui-svg>
+
+            <ng-container *ngIf="loading[subject.id]; else notLoading">
+              <app-loader></app-loader>
+            </ng-container>
+            <ng-template #notLoading></ng-template>
+          </tui-button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="pagingInfo">
+      <tr>
+        <td [colSpan]="columns.length">
+          <tui-table-pagination
+            [total]="pagingInfo.total || 0"
+            [size]="pagingInfo.pageSize"
+            [items]="[2, 5, 10, 15]"
+            (pageChange)="onPageChange($event)"
+            (sizeChange)="onSizeChange($event)"
+          ></tui-table-pagination>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <div></div>
+</div>
