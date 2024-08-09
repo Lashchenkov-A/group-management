@@ -5,9 +5,21 @@ import { LessonListComponent } from './lesson/lesson-list/lesson-list.component'
 import { SubjectListComponent } from './subject/subject-list/subject-list.component';
 import { OfficeListComponent } from './office/office-list/office-list.component';
 import { TeacherListComponent } from './teacher/teacher-list/teacher-list.component';
+import { UserScheduleComponent } from './schedule/user-schedule/user-schedule.component';
+import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule/group-schedule.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/lessons', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: 'home',
+    component: UserScheduleComponent,
+    data: { title: 'Расписание занятий студентов' },
+  },
+  {
+    path: 'schedule',
+    component: GroupScheduleComponent,
+    data: { title: 'Расписание занятий' },
+  },
   {
     path: 'groups',
     component: GroupListComponent,

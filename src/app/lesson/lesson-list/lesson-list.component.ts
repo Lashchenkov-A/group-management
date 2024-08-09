@@ -68,6 +68,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
 
   showDialog(): void {
     const dialogRef = this.dialogs.open<number>(
+      //first
       new PolymorpheusComponent(LessonAddComponent, this.injector),
       {
         dismissible: true,

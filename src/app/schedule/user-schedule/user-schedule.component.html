@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="main_container">
+    <section id="searchForm" class="search_wrap">
+      <div class="search">
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+          <input
+            formControlName="searchInput"
+            type="text"
+            placeholder="Введите № группы / Ф.И.О. преподавателя"
+            maxlength="30"
+            required
+          />
+          <button id="searchButton" type="submit">
+            <img src="assets/img/flaticon.png" class="search_wrapper" />
+          </button>
+        </form>
+      </div>
+    </section>
+    <section id="searchHistory" class="story_wrap"></section>
+    <section class="map_wrap">
+      <a class="map_bsu">
+        <img src="assets/img/map_bsu.jpg" class="map" />
+      </a>
+      <a class="map_bsu">
+        <img src="assets/img/map_bsu_1.jpg" class="map" />
+      </a>
+    </section>
+  </div>
+</div>

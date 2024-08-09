@@ -1,0 +1,62 @@
+<div class="body_container">
+  <section class="search_wrap">
+    <div class="search">
+      <div class="searchForm">
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Введите № группы / Ф.И.О. преподавателя"
+            maxlength="30"
+            formControlName="searchInput"
+            required
+          />
+          <button id="searchButton" type="submit">
+            <img src="assets/img/flaticon.png" class="search_wrapper" />
+          </button>
+        </form>
+      </div>
+      <div></div>
+      <div class="date_search">
+        <button
+          type="button"
+          id="datePrev"
+          name="date"
+          (click)="changeWeek(-1)"
+        >
+          ˂
+        </button>
+        <p id="currentWeekDate">{{ currentWeekDate }}</p>
+        <button type="button" id="dateNext" name="date" (click)="changeWeek(1)">
+          ˃
+        </button>
+      </div>
+    </div>
+    <div class="group_number">
+      <p id="groupNumber">{{ groupNumber }}</p>
+    </div>
+  </section>
+
+  <table id="scheduleTable" class="table_component">
+    <thead>
+      <tr>
+        <th>Время</th>
+        <th>Понедельник</th>
+        <th>Вторник</th>
+        <th>Среда</th>
+        <th>Четверг</th>
+        <th>Пятница</th>
+        <th>Суббота</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let timeSlot of timeSlots">
+        <td>{{ timeSlot.label }}</td>
+        <td
+          *ngFor="let day of daysOfWeek"
+          [innerHTML]="getCellContent(day, timeSlot.time)"
+        ></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -51,6 +51,8 @@ import { TeacherListComponent } from './teacher/teacher-list/teacher-list.compon
 import { TeacherAddComponent } from './teacher/component/teacher-add/teacher-add.component';
 import { TeacherEditComponent } from './teacher/component/teacher-edit/teacher-edit.component';
 import { TeacherFormComponent } from './teacher/component/teacher-form/teacher-form.component';
+import { UserScheduleComponent } from './schedule/user-schedule/user-schedule.component';
+import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule/group-schedule.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import { TeacherFormComponent } from './teacher/component/teacher-form/teacher-f
     TeacherAddComponent,
     TeacherEditComponent,
     TeacherFormComponent,
+    UserScheduleComponent,
+    GroupScheduleComponent,
   ],
   imports: [
     CommonModule,

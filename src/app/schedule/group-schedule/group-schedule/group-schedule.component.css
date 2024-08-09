@@ -1,0 +1,241 @@
+* {
+  margin: 0;
+}
+
+body {
+  font-family: "roboto-regular";
+  font-size: 50px;
+  color: black;
+}
+.body_container {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+#searchButton {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: none;
+}
+
+#searchForm {
+  display: flex;
+  align-items: center;
+  align-items: center;
+}
+
+.search input[type="text"] {
+  width: 700px;
+  height: 50px;
+  border-color: #277db4;
+  border-style: solid;
+  border-width: 6px;
+  font-size: 32px;
+}
+
+.search_wrapper {
+  width: 100%;
+  height: 60px;
+  border: none;
+  cursor: pointer;
+}
+
+.group_number {
+  color: black;
+  margin-top: 30px;
+}
+
+.date_search {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  color: black;
+  font-size: 40px;
+}
+
+.date_search button {
+  margin: 0 10px;
+  border: none;
+  font-size: 30px;
+  background-color: rgba(255, 255, 255, 0);
+  cursor: pointer;
+}
+
+.date {
+  margin-bottom: 20px;
+}
+
+.date_1 {
+  margin-bottom: 20px;
+}
+
+#date {
+  background-color: rgba(28, 28, 28, 0);
+  border: none;
+  cursor: pointer;
+}
+
+#date_1 {
+  background-color: rgba(28, 28, 28, 0);
+  border: none;
+  cursor: pointer;
+}
+
+.table_component {
+  font-size: 26px;
+}
+
+.table_component table {
+  width: 100%;
+  table-layout: fixed;
+  text-align: center;
+  margin-top: 0;
+  overflow-x: auto;
+}
+
+.table_component caption {
+  caption-side: top;
+  text-align: left;
+}
+
+.table_component th {
+  border: 2px double #277db4;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 30px;
+  border-width: 6px;
+  border-style: solid;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.table_component td {
+  border: 2px double #277db4;
+  color: #000000;
+  padding: 10px;
+  border-width: 6px;
+  border-style: solid;
+}
+
+.cell {
+  background-color: #c3e5f4;
+}
+
+#scheduleListContainer1 {
+  box-shadow: 0px 4px 8px 4px rgba(209, 207, 207, 1);
+  border-radius: 8px;
+  margin: 15px;
+  width: 100%;
+}
+
+.dayOfWeekTitle {
+  background-color: #41aaed;
+  padding: 20px;
+  justify-content: space-between;
+  display: flex;
+  color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.activityContainer {
+  display: flex;
+  margin-top: 10px;
+  padding: 30px;
+}
+
+.horizontalLine {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.pair {
+  display: table;
+  width: 180px;
+  height: 162px;
+  box-sizing: border-box;
+}
+
+.subject {
+  width: 750.234px;
+  padding-left: 20px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .body_container {
+    padding: 10px;
+  }
+
+  .main_title {
+    font-size: 40px;
+    text-align: center;
+    color: white;
+  }
+
+  .searchForm {
+    display: flex;
+  }
+
+  .search_wrap {
+    text-align: center;
+    margin: 15px;
+  }
+
+  .search form {
+    display: block;
+    text-align: center;
+  }
+
+  .search input {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+
+  .story_wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  .story {
+    margin-bottom: 10px;
+    font-size: 30px;
+  }
+
+  .group_number {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .date_search {
+    margin-top: 20px;
+    justify-content: end;
+    font-size: 30px;
+  }
+
+  .map_wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map {
+    width: 98%;
+    height: auto;
+  }
+
+  .table_component {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 1000px) {
+  #scheduleListContainer {
+    display: none;
+  }
+}
