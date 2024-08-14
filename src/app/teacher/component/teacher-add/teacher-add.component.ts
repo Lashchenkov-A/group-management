@@ -42,7 +42,6 @@ export class TeacherAddComponent implements OnInit {
         }
       );
     } else {
-      console.log('Пустое значение преподавателя');
       this.showErrorMessage();
     }
   }

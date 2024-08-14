@@ -56,7 +56,6 @@ export class TeacherEditComponent implements OnInit {
         }
       );
     } else {
-      console.log('Форма заполнения преподавателя пустая');
       this.showErrorMessage();
     }
   }

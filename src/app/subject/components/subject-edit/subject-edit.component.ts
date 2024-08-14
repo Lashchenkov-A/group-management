@@ -50,7 +50,6 @@ export class SubjectEditComponent implements OnInit {
         }
       );
     } else {
-      console.log('Имя предмета пусто');
       this.showErrorMessage();
     }
   }

@@ -54,7 +54,6 @@ export class OfficeEditComponent implements OnInit {
         }
       );
     } else {
-      console.log('Номер кабинета пустой');
       this.showErrorMessage();
     }
   }

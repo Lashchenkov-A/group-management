@@ -33,7 +33,6 @@ export class GroupAddComponent implements OnInit {
         }
       );
     } else {
-      console.log('Имя группы пусто');
       this.showErrorMessage();
     }
   }

@@ -68,7 +68,6 @@ export class LessonListComponent implements OnInit, OnDestroy {
 
   showDialog(): void {
     const dialogRef = this.dialogs.open<number>(
-      //first
       new PolymorpheusComponent(LessonAddComponent, this.injector),
       {
         dismissible: true,
@@ -100,9 +99,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
       next: (data) => {
         console.info(`Dialog emitted data = ${data}`);
       },
-      complete: () => {
-        console.info('Dialog closed');
-      },
+      complete: () => {},
     });
   }
 

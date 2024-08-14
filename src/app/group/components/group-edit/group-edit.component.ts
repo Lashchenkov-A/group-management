@@ -50,7 +50,6 @@ export class GroupEditComponent implements OnInit {
         }
       );
     } else {
-      console.log('Имя группы пусто');
       this.showErrorMessage();
     }
   }

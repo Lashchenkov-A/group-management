@@ -8,6 +8,13 @@
 
       <div>
         <app-main-navigation></app-main-navigation>
+        <tui-button
+          class="add-button"
+          appearance="icon"
+          (click)="openAuthModal()"
+        >
+          <tui-svg src="tuiIconPlusCircleLarge"></tui-svg>
+        </tui-button>
       </div>
     </header>
   </section>

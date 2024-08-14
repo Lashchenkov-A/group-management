@@ -33,7 +33,6 @@ export class SubjectAddComponent implements OnInit {
         }
       );
     } else {
-      console.log('Имя предмета пусто');
       this.showErrorMessage();
     }
   }

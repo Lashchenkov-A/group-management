@@ -69,7 +69,6 @@ export class OfficeListComponent implements OnInit {
     this.officeService.getOffices(page, pageSize).subscribe(
       (res) => {
         this.offices = res.data;
-        console.log(this.offices);
         this.pagingInfo = { ...res, data: [] };
       },
       (error) => console.error('Ошибка при запросе:', error)

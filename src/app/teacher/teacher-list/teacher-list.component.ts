@@ -75,7 +75,6 @@ export class TeacherListComponent implements OnInit {
     this.teacherService.getTeachers(page, pageSize).subscribe(
       (res) => {
         this.teachers = res.data;
-        console.log(this.teachers);
         this.pagingInfo = { ...res, data: [] };
       },
       (error) => console.error('Ошибка при запросе:', error)

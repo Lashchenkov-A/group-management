@@ -1,0 +1,21 @@
+<h2>Login</h2>
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+  <tui-input formControlName="username" placeholder="Username" required
+    >Type a login</tui-input
+  >
+
+  <tui-input-password
+    formControlName="password"
+    [tuiTextfieldLabelOutside]="true"
+  >
+    Type a password
+  </tui-input-password>
+  <button
+    appearance="primary"
+    tuiButton
+    type="submit"
+    [disabled]="!loginForm.valid"
+  >
+    <img [src]="icon" class="btn-icon" /> Войти
+  </button>
+</form>

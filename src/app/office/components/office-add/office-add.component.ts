@@ -33,7 +33,6 @@ export class OfficeAddComponent implements OnInit {
         }
       );
     } else {
-      console.log('Пустое значение кабинета');
       this.showErrorMessage();
     }
   }

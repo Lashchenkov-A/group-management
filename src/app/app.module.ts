@@ -18,11 +18,12 @@ import {
   TuiInputModule,
   TuiSelectModule,
   TuiDataListWrapperModule,
+  TuiInputPasswordModule,
 } from '@taiga-ui/kit';
 import { TuiAutoFocusModule } from '@taiga-ui/cdk';
 import { TuiTabBarModule } from '@taiga-ui/addon-mobile';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -53,6 +54,11 @@ import { TeacherEditComponent } from './teacher/component/teacher-edit/teacher-e
 import { TeacherFormComponent } from './teacher/component/teacher-form/teacher-form.component';
 import { UserScheduleComponent } from './schedule/user-schedule/user-schedule.component';
 import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule/group-schedule.component';
+import { LoginComponent } from './login/login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { AuthInterceptor } from '../core/auth/auth.interceptor';
+import { AuthModalComponent } from './components/auth/auth-modal/auth-modal.component';
+import { AuthService } from '../core/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -81,6 +87,9 @@ import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule
     TeacherFormComponent,
     UserScheduleComponent,
     GroupScheduleComponent,
+    LoginComponent,
+    RegisterComponent,
+    AuthModalComponent,
   ],
   imports: [
     CommonModule,
@@ -105,9 +114,14 @@ import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule
     TuiDataListModule,
     TuiTextfieldControllerModule,
     TuiTabBarModule,
+    TuiInputPasswordModule,
   ],
   bootstrap: [AppComponent],
-  providers: [{ provide: TUI_SANITIZER, useClass: NgDompurifySanitizer }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
+    AuthService,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
