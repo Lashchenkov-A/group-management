@@ -1,4 +1,4 @@
-<tui-root>
+<tui-root *ngIf="isAdmin$ | async">
   <nav tuiTabBar class="container">
     <a
       icon="tuiIconMenuLarge"

@@ -59,6 +59,7 @@ import { RegisterComponent } from './register/register.component';
 import { AuthInterceptor } from '../core/auth/auth.interceptor';
 import { AuthModalComponent } from './components/auth/auth-modal/auth-modal.component';
 import { AuthService } from '../core/auth/auth.service';
+import { LucideAngularModule, LogIn, LogOut } from 'lucide-angular';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { AuthService } from '../core/auth/auth.service';
     TuiTextfieldControllerModule,
     TuiTabBarModule,
     TuiInputPasswordModule,
+    LucideAngularModule.pick({ LogIn, LogOut }),
   ],
   bootstrap: [AppComponent],
   providers: [

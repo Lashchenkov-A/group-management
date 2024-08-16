@@ -8,13 +8,24 @@
 
       <div>
         <app-main-navigation></app-main-navigation>
-        <tui-button
-          class="add-button"
-          appearance="icon"
-          (click)="openAuthModal()"
-        >
-          <tui-svg src="tuiIconPlusCircleLarge"></tui-svg>
-        </tui-button>
+        <ng-container *ngIf="isAuthenticated$ | async; else loginTemplate">
+          <tui-button
+            class="logout-button"
+            appearance="icon"
+            (click)="logout()"
+          >
+            <lucide-icon name="log-out"></lucide-icon>
+          </tui-button>
+        </ng-container>
+        <ng-template #loginTemplate>
+          <tui-button
+            class="login-button"
+            appearance="icon"
+            (click)="openAuthModal()"
+          >
+            <lucide-icon name="log-in"></lucide-icon>
+          </tui-button>
+        </ng-template>
       </div>
     </header>
   </section>

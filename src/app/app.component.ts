@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit, Injector, Inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthModalComponent } from './components/auth/auth-modal/auth-modal.component';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { AuthService } from '../core/auth/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,6 +13,7 @@ import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 })
 export class AppComponent implements OnInit, OnDestroy {
   pageTitle: string = 'Редактирование сущностей';
+  isAuthenticated$!: Observable<boolean>;
   private routerSubscription: Subscription | undefined;
 
   constructor(
@@ -19,7 +21,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private dialogService: TuiDialogService,
     @Inject(Injector) private readonly injector: Injector,
-    @Inject(TuiDialogService) private readonly dialogs: TuiDialogService
+    @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +41,9 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe((title) => {
         this.pageTitle = title || 'Редактирование сущностей';
       });
+    this.isAuthenticated$ = this.authService.userRoles$.pipe(
+      map((roles) => roles.length > 0)
+    );
   }
 
   ngOnDestroy(): void {
@@ -54,5 +60,9 @@ export class AppComponent implements OnInit, OnDestroy {
           dialogRef.componentRef.instance.setDialogRef(dialogRef);
         }
       });
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

@@ -7,8 +7,7 @@ import { OfficeListComponent } from './office/office-list/office-list.component'
 import { TeacherListComponent } from './teacher/teacher-list/teacher-list.component';
 import { UserScheduleComponent } from './schedule/user-schedule/user-schedule.component';
 import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule/group-schedule.component';
-import { LoginComponent } from './login/login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { AdminGuard } from './components/auth/admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -26,26 +25,31 @@ const routes: Routes = [
     path: 'groups',
     component: GroupListComponent,
     data: { title: 'Редактирование групп' },
+    canActivate: [AdminGuard],
   },
   {
     path: 'lessons',
     component: LessonListComponent,
     data: { title: 'Редактирование пар' },
+    canActivate: [AdminGuard],
   },
   {
     path: 'subjects',
     component: SubjectListComponent,
     data: { title: 'Редактирование предметов' },
+    canActivate: [AdminGuard],
   },
   {
     path: 'offices',
     component: OfficeListComponent,
     data: { title: 'Редактирование кабинетов' },
+    canActivate: [AdminGuard],
   },
   {
     path: 'teachers',
     component: TeacherListComponent,
     data: { title: 'Редактирование преподавателей' },
+    canActivate: [AdminGuard],
   },
 ];
 
