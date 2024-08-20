@@ -1,6 +1,9 @@
 .add-button {
   cursor: pointer;
 }
+.table {
+  z-index: 0;
+}
 
 .teacher-list-container {
   display: flex;

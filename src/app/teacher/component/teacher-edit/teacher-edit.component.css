@@ -1,0 +1,10 @@
+.photo-preview {
+  margin-bottom: 20px;
+}
+
+.current-photo,
+.preview-photo {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 5px;
+}

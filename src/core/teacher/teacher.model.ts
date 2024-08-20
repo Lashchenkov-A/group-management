@@ -4,4 +4,5 @@ export interface Teacher {
   secondName: string;
   lastName: string;
   jobRole: string;
+  photoPath?: string;
 }

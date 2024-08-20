@@ -12,3 +12,17 @@
         jobRole: teacher.jobRole,
     }"
 ></app-teacher-form>
+<div *ngIf="teacher?.photoPath" class="photo-preview">
+  <h4>Текущая фотография:</h4>
+  <img [src]="teacher?.photoPath" alt="Teacher Photo" class="current-photo" />
+</div>
+
+<button
+  appearance="primary"
+  tuiButton
+  type="button"
+  class="btn"
+  (click)="handleSave()"
+>
+  <img [src]="icon" class="btn-icon" /> Сохранить
+</button>

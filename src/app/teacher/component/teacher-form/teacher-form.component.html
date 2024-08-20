@@ -67,7 +67,41 @@
       type="text"
     />
   </tui-input>
-  <button appearance="primary" tuiButton type="submit">
-    <img [src]="icon" class="btn-icon" /> Сохранить
-  </button>
+
+  <tui-input-files
+    *ngIf="!control.value"
+    accept="image/*"
+    [formControl]="control"
+    (reject)="onReject($event)"
+    (change)="onFileSelected($event)"
+  ></tui-input-files>
+
+  <tui-files class="tui-space_top-1">
+    <tui-file
+      *ngIf="loadedFiles$ | async as file"
+      [file]="file"
+      [showDelete]="control.enabled"
+      (removed)="removeFile()"
+    ></tui-file>
+
+    <tui-file
+      *ngIf="rejectedFiles$ | async as file"
+      state="error"
+      [file]="file"
+      [showDelete]="control.enabled"
+      (removed)="clearRejected()"
+    ></tui-file>
+
+    <tui-file
+      *ngIf="loadingFiles$ | async as file"
+      state="loading"
+      [file]="file"
+      [showDelete]="control.enabled"
+    ></tui-file>
+  </tui-files>
+
+  <div *ngIf="previewUrl" class="photo-preview">
+    <h4>Предварительный просмотр новой фотографии:</h4>
+    <img [src]="previewUrl" alt="New Teacher Photo" class="preview-photo" />
+  </div>
 </form>

@@ -19,10 +19,14 @@ import {
   TuiSelectModule,
   TuiDataListWrapperModule,
   TuiInputPasswordModule,
+  TuiFilesModule,
+  TuiInputFilesModule,
+  TuiFileLike,
+  TuiInputFilesComponent,
 } from '@taiga-ui/kit';
 import { TuiAutoFocusModule } from '@taiga-ui/cdk';
 import { TuiTabBarModule } from '@taiga-ui/addon-mobile';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -117,6 +121,9 @@ import { LucideAngularModule, LogIn, LogOut } from 'lucide-angular';
     TuiTabBarModule,
     TuiInputPasswordModule,
     LucideAngularModule.pick({ LogIn, LogOut }),
+    TuiFilesModule,
+    TuiFilesModule,
+    TuiInputFilesModule,
   ],
   bootstrap: [AppComponent],
   providers: [

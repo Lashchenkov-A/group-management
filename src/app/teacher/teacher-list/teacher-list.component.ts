@@ -82,11 +82,11 @@ export class TeacherListComponent implements OnInit {
   }
 
   deleteTeacher(teacher: Teacher): void {
-    const id = teacher.id;
-    this.openConfirmationDialog()
+    this.openConfirmationDialog(teacher)
       .pipe(takeUntil(this.destroy$))
       .subscribe((isConfirmed: boolean) => {
         if (isConfirmed) {
+          const id = teacher.id;
           this.loading[id] = true;
           this.teacherService.deleteTeacher(id).subscribe({
             next: () => {
@@ -109,10 +109,10 @@ export class TeacherListComponent implements OnInit {
       });
   }
 
-  openConfirmationDialog() {
+  openConfirmationDialog(teacher: Teacher) {
     return this.ui.confirmModal(
       'Подтверждение удаления',
-      `Вы действительно хотите удалить преподавателя "${this.teacher.jobRole} ${this.teacher.firstName} ${this.teacher.secondName} ${this.teacher.lastName}"?`
+      `Вы действительно хотите удалить преподавателя "${teacher.jobRole} ${teacher.firstName} ${teacher.secondName} ${teacher.lastName}"?`
     );
   }
 

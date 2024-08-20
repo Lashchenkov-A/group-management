@@ -1,0 +1,8 @@
+.tui-space_top-1 {
+  display: flex;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+}

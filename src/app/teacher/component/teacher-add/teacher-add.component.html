@@ -4,4 +4,14 @@
     [onSubmit]="addTeacher.bind(this)"
     [teacher]="teacher"
   ></app-teacher-form>
+
+  <button
+    appearance="primary"
+    tuiButton
+    type="button"
+    class="btn"
+    (click)="handleSave()"
+  >
+    <img [src]="icon" class="btn-icon" /> Сохранить
+  </button>
 </h2>

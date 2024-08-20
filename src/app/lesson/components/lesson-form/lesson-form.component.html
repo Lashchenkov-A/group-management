@@ -1,4 +1,4 @@
-<form [formGroup]="lessonForm" (ngSubmit)="submit()">
+<form [formGroup]="lessonForm" (ngSubmit)="submit()" class="lesson-form">
   <label for="YearInput">Выберите год</label>
   <tui-select formControlName="year" tuiTextfieldSize="m">
     <tui-data-list-wrapper *tuiDataList [items]="years">
