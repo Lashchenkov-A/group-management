@@ -1,8 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { GroupService } from '../../../../core/group/group.service';
 import { GroupFormModel } from '../group-form/group-form.component';
 import { UIService } from '../../../../core/common/services/ui.service';
+import { TuiDialogContext } from '@taiga-ui/core';
+import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+
 @Component({
   selector: 'app-group-add',
   templateUrl: './group-add.component.html',
@@ -13,6 +21,8 @@ export class GroupAddComponent implements OnInit {
   group: GroupFormModel = { name: '' };
 
   constructor(
+    @Inject(POLYMORPHEUS_CONTEXT)
+    private readonly context: TuiDialogContext<boolean>,
     private groupService: GroupService,
     public router: Router,
     private readonly ui: UIService
@@ -25,7 +35,7 @@ export class GroupAddComponent implements OnInit {
       this.groupService.addGroup(group).subscribe(
         () => {
           this.ui.showAlert('Группа успешно добавлена!');
-          this.router.navigate(['/groups']);
+          this.context.completeWith(true);
         },
         (error) => {
           console.error('Ошибка при добавлении группы', error);

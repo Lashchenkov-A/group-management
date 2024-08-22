@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError, tap, BehaviorSubject } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:44330/api/auth';
+  private apiUrl = environment.apiUrl + 'auth';
   private userRolesSubject = new BehaviorSubject<string[]>(
     this.getRolesFromLocalStorage()
   );

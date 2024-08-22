@@ -1,14 +1,12 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TeacherService } from '../../../../core/teacher/teacher.service';
 import { TeacherFormModel } from '../teacher-form/teacher-form.component';
 import { UIService } from '../../../../core/common/services/ui.service';
 import { FormControl } from '@angular/forms';
+import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { TuiDialogContext } from '@taiga-ui/core';
+
 @Component({
   selector: 'app-teacher-add',
   templateUrl: './teacher-add.component.html',
@@ -21,11 +19,15 @@ export class TeacherAddComponent implements OnInit {
     secondName: '',
     lastName: '',
     jobRole: '',
+    photoPath: undefined,
+    id: undefined,
   };
 
   control = new FormControl();
 
   constructor(
+    @Inject(POLYMORPHEUS_CONTEXT)
+    private readonly context: TuiDialogContext<boolean>,
     private teacherService: TeacherService,
     public router: Router,
     private readonly ui: UIService
@@ -35,29 +37,26 @@ export class TeacherAddComponent implements OnInit {
 
   handleSave(): void {
     const file = this.control.value;
-    this.addTeacher(this.teacher, file);
+    console.log(file);
+    console.log(this.teacher);
+    console.log(this.control.value);
+
+    this.addTeacher(this.teacher);
+    console.log(this.teacher);
   }
 
-  addTeacher(teacher: TeacherFormModel, file?: File): void {
-    if (
-      teacher.firstName &&
-      teacher.secondName &&
-      teacher.lastName &&
-      teacher.jobRole
-    ) {
-      this.teacherService.addTeacher(teacher, file).subscribe(
-        () => {
-          this.ui.showAlert('Преподаватель успешно добавлен!');
-          this.router.navigate(['/teachers']);
-        },
-        (error) => {
-          console.error('Ошибка при добавлении преподавателя', error);
-          this.showErrorMessage();
-        }
-      );
-    } else {
-      this.showErrorMessage();
-    }
+  addTeacher(teacher: TeacherFormModel): void {
+    console.log(teacher);
+    this.teacherService.addTeacher(teacher).subscribe(
+      () => {
+        this.ui.showAlert('Преподаватель успешно добавлен!');
+        this.context.completeWith(true);
+      },
+      (error) => {
+        console.error('Ошибка при добавлении преподавателя', error);
+        this.showErrorMessage();
+      }
+    );
   }
 
   showErrorMessage(): void {

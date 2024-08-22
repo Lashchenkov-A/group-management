@@ -18,7 +18,7 @@ export class SubjectEditComponent implements OnInit {
     private SubjectService: SubjectService,
     private readonly ui: UIService,
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<void, { subjectId: number }>
+    private readonly context: TuiDialogContext<boolean, { subjectId: number }>
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class SubjectEditComponent implements OnInit {
       this.SubjectService.updateSubject(this.subject.id, formValues).subscribe(
         () => {
           this.ui.showAlert('Предмет успешно изменен!');
-          this.context.completeWith();
+          this.context.completeWith(true);
         },
         (error) => {
           this.showErrorMessage();

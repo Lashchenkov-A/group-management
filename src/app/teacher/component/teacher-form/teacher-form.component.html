@@ -4,10 +4,7 @@
     tuiTextfieldSize="m"
     type="text"
     [(ngModel)]="teacher.firstName"
-    required
-    pattern="[0-9]*"
-    maxlength="8"
-    name="corpusNumber"
+    name="Name"
     style="margin: 10px"
   >
     Имя
@@ -18,10 +15,7 @@
     tuiTextfieldSize="m"
     type="text"
     [(ngModel)]="teacher.secondName"
-    required
-    pattern="[0-9]*"
-    maxlength="8"
-    name="classroomNumber"
+    name="secondName"
     style="margin: 10px"
   >
     Отчество
@@ -36,9 +30,6 @@
     tuiTextfieldSize="m"
     type="text"
     [(ngModel)]="teacher.lastName"
-    required
-    pattern="[0-9]*"
-    maxlength="8"
     name="lastName"
     style="margin: 10px"
   >
@@ -54,9 +45,6 @@
     tuiTextfieldSize="m"
     type="text"
     [(ngModel)]="teacher.jobRole"
-    required
-    pattern="[0-9]*"
-    maxlength="8"
     name="jobRole"
     style="margin: 10px"
   >
@@ -73,7 +61,6 @@
     accept="image/*"
     [formControl]="control"
     (reject)="onReject($event)"
-    (change)="onFileSelected($event)"
   ></tui-input-files>
 
   <tui-files class="tui-space_top-1">
@@ -104,4 +91,7 @@
     <h4>Предварительный просмотр новой фотографии:</h4>
     <img [src]="previewUrl" alt="New Teacher Photo" class="preview-photo" />
   </div>
+  <button appearance="primary" tuiButton type="submit" class="btn">
+    <img [src]="icon" class="btn-icon" /> Сохранить
+  </button>
 </form>

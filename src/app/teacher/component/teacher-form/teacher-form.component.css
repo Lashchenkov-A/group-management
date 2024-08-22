@@ -6,3 +6,13 @@
   display: flex;
   justify-content: center;
 }
+
+.photo-preview {
+  margin-bottom: 20px;
+}
+
+.preview-photo {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 5px;
+}

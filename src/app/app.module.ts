@@ -23,8 +23,9 @@ import {
   TuiInputFilesModule,
   TuiFileLike,
   TuiInputFilesComponent,
+  TuiCheckboxModule,
 } from '@taiga-ui/kit';
-import { TuiAutoFocusModule } from '@taiga-ui/cdk';
+import { TUI_DIALOG_CLOSES_ON_BACK, TuiAutoFocusModule } from '@taiga-ui/cdk';
 import { TuiTabBarModule } from '@taiga-ui/addon-mobile';
 import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -64,6 +65,7 @@ import { AuthInterceptor } from '../core/auth/auth.interceptor';
 import { AuthModalComponent } from './components/auth/auth-modal/auth-modal.component';
 import { AuthService } from '../core/auth/auth.service';
 import { LucideAngularModule, LogIn, LogOut } from 'lucide-angular';
+import { of } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -124,12 +126,14 @@ import { LucideAngularModule, LogIn, LogOut } from 'lucide-angular';
     TuiFilesModule,
     TuiFilesModule,
     TuiInputFilesModule,
+    TuiCheckboxModule,
   ],
   bootstrap: [AppComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
     AuthService,
+    { provide: TUI_DIALOG_CLOSES_ON_BACK, useValue: of(true) },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

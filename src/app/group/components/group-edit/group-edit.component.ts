@@ -18,7 +18,7 @@ export class GroupEditComponent implements OnInit {
     private groupService: GroupService,
     private readonly ui: UIService,
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<void, { groupId: number }>
+    private readonly context: TuiDialogContext<boolean, { groupId: number }>
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class GroupEditComponent implements OnInit {
       this.groupService.updateGroup(this.group.id, formValues).subscribe(
         () => {
           this.ui.showAlert('Группа успешно изменена!');
-          this.context.completeWith();
+          this.context.completeWith(true);
         },
         (error) => {
           this.showErrorMessage();

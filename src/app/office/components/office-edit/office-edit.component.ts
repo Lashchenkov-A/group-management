@@ -18,7 +18,7 @@ export class OfficeEditComponent implements OnInit {
     private officeService: OfficeService,
     private readonly ui: UIService,
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<void, { officeId: number }>
+    private readonly context: TuiDialogContext<boolean, { officeId: number }>
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +46,7 @@ export class OfficeEditComponent implements OnInit {
       this.officeService.updateOffice(this.office.id, formValues).subscribe(
         () => {
           this.ui.showAlert('Кабинет успешно изменен!');
-          this.context.completeWith();
+          this.context.completeWith(true);
         },
         (error) => {
           this.showErrorMessage();

@@ -18,14 +18,14 @@ export class LessonAddComponent {
     private router: Router,
     @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<void, any>
+    private readonly context: TuiDialogContext<boolean, any>
   ) {}
 
   onFormSubmit(lesson: any): void {
     this.lessonService.addLesson(lesson).subscribe(
       () => {
         this.ui.showAlert('Урок успешно добавлен!');
-        this.context.completeWith(lesson);
+        this.context.completeWith(true);
       },
       (error: HttpErrorResponse) => {
         if (

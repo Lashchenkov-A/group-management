@@ -1,8 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { OfficeService } from '../../../../core/office/office.service';
 import { OfficeFormModel } from '../office-form/office-form.component';
 import { UIService } from '../../../../core/common/services/ui.service';
+import { TuiDialogContext } from '@taiga-ui/core';
+import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 @Component({
   selector: 'app-office-add',
   templateUrl: './office-add.component.html',
@@ -13,6 +20,8 @@ export class OfficeAddComponent implements OnInit {
   office: OfficeFormModel = { corpusNumber: 0, classroomNumber: 0 };
 
   constructor(
+    @Inject(POLYMORPHEUS_CONTEXT)
+    private readonly context: TuiDialogContext<boolean>,
     private officeService: OfficeService,
     public router: Router,
     private readonly ui: UIService
@@ -25,7 +34,7 @@ export class OfficeAddComponent implements OnInit {
       this.officeService.addOffice(office).subscribe(
         () => {
           this.ui.showAlert('Кабинет успешно добавлен!');
-          this.router.navigate(['/offices']);
+          this.context.completeWith(true);
         },
         (error) => {
           console.error('Ошибка при добавлении кабинета', error);

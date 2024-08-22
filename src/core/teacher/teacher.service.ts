@@ -32,34 +32,23 @@ export class TeacherService {
     return this.http.delete<void>(`${this.apiPath}/${id}`);
   }
 
-  addTeacher(model: TeacherFormModel, file?: File): Observable<Teacher> {
-    const formData = new FormData();
-    formData.append('firstName', model.firstName);
-    formData.append('secondName', model.secondName);
-    formData.append('lastName', model.lastName);
-    formData.append('jobRole', model.jobRole);
-    if (file) {
-      formData.append('photo', file);
-    }
-    return this.http.post<Teacher>(this.apiPath, formData);
+  addTeacher(model: TeacherFormModel): Observable<Teacher> {
+    return this.http.post<Teacher>(this.apiPath, model);
   }
 
-  updateTeacher(teacherId: number, teacherData: TeacherFormModel) {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<Teacher>(`${this.apiPath}/${teacherId}`, teacherData, {
-      headers,
-    });
+  updateTeacher(
+    teacherId: number,
+    teacherData: TeacherFormModel
+  ): Observable<void> {
+    return this.http.put<void>(`${this.apiPath}/${teacherId}`, teacherData);
   }
 
-  uploadTeacherPhoto(
-    id: number,
-    file: File
-  ): Observable<{ photoPath: string }> {
+  uploadTeacherPhoto(file: File): Observable<{ photoPath: string }> {
     const formData = new FormData();
     formData.append('photo', file);
 
     return this.http.post<{ photoPath: string }>(
-      `${this.apiPath}/upload-photo/${id}`,
+      `${this.apiPath}/upload-photo`,
       formData
     );
   }

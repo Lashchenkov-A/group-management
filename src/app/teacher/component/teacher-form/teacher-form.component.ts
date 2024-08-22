@@ -1,13 +1,25 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TuiFileLike } from '@taiga-ui/kit';
-import { finalize, map, Observable, of, Subject, switchMap, timer } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  map,
+  Observable,
+  of,
+  Subject,
+  switchMap,
+} from 'rxjs';
+import { TeacherService } from '../../../../core/teacher/teacher.service';
+import { UIService } from '../../../../core/common/services/ui.service';
 
 export interface TeacherFormModel {
+  id: number | undefined;
   firstName: string;
   secondName: string;
   lastName: string;
   jobRole: string;
+  photoPath?: string | undefined;
 }
 
 @Component({
@@ -16,12 +28,15 @@ export interface TeacherFormModel {
   styleUrl: './teacher-form.component.css',
 })
 export class TeacherFormComponent {
-  @Input() onSubmit!: (values: TeacherFormModel, file?: File) => void;
+  @Input() icon: string = '';
+  @Input() onSubmit!: (values: TeacherFormModel) => void;
   @Input() teacher: TeacherFormModel = {
     firstName: '',
     secondName: '',
     lastName: '',
     jobRole: '',
+    photoPath: undefined,
+    id: undefined,
   };
 
   previewUrl: string | ArrayBuffer | null | undefined = null;
@@ -32,32 +47,25 @@ export class TeacherFormComponent {
     switchMap((file) => (file ? this.makeRequest(file) : of(null)))
   );
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private teacherService: TeacherService,
+    private ui: UIService
+  ) {}
 
-  onFileSelected(event: Event): void {
-    console.log('Событие произошло');
-    const input = event.target as HTMLInputElement;
-    console.log('Input files:', input.files);
+  setPreviewFromFile(file: File): void {
+    const reader = new FileReader();
 
-    if (input.files && input.files[0]) {
-      console.log('Файл найден');
-      const file = input.files[0];
-      const reader = new FileReader();
+    reader.onload = (e) => {
+      this.previewUrl = e.target?.result;
+      this.cdr.detectChanges();
+    };
 
-      reader.onload = (e) => {
-        this.previewUrl = e.target?.result;
-        console.log('Предварительный просмотр URL:', this.previewUrl);
-        this.cdr.detectChanges();
-      };
+    reader.onerror = (e) => {
+      console.error('Ошибка при чтении файла:', e);
+    };
 
-      reader.onerror = (e) => {
-        console.error('Ошибка при чтении файла:', e);
-      };
-
-      reader.readAsDataURL(file);
-    } else {
-      console.error('Файл не найден или не выбран.');
-    }
+    reader.readAsDataURL(file);
   }
 
   onReject(file: TuiFileLike | readonly TuiFileLike[]): void {
@@ -74,21 +82,38 @@ export class TeacherFormComponent {
   }
 
   makeRequest(file: TuiFileLike): Observable<TuiFileLike | null> {
+    this.setPreviewFromFile(file as File);
+
     this.loadingFiles$.next(file);
 
-    return timer(1000).pipe(
-      map(() => {
-        return file;
+    return this.teacherService.uploadTeacherPhoto(file as File).pipe(
+      catchError(() => {
+        return of(null);
       }),
-      finalize(() => {
-        this.loadingFiles$.next(null);
-      })
+      map((result) => {
+        if (result) {
+          this.teacher.photoPath = result.photoPath;
+          console.log(this.teacher.photoPath);
+
+          this.ui.showAlert('Фотография успешно добавлена!');
+          console.log(file);
+          return file;
+        } else {
+          this.previewUrl = null;
+          console.log(this.previewUrl);
+
+          this.ui.showAlert('Ошибка при загрузке фотографии.', true);
+          this.rejectedFiles$.next(file);
+          return null;
+        }
+      }),
+      finalize(() => this.loadingFiles$.next(null))
     );
   }
 
   public handleSubmit(event: Event): void {
     event.preventDefault();
-    const file = this.control.value;
-    this.onSubmit(this.teacher, file ? (file as File) : undefined);
+    console.log('Форма отправлена с данными:', this.teacher);
+    this.onSubmit(this.teacher);
   }
 }

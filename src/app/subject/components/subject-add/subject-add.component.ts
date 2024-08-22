@@ -1,8 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Inject,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { SubjectService } from '../../../../core/subject/subject.service';
 import { SubjectFormModel } from '../subject-form/subject-form.component';
 import { UIService } from '../../../../core/common/services/ui.service';
+import { TuiDialogContext } from '@taiga-ui/core';
+import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+
 @Component({
   selector: 'app-subject-add',
   templateUrl: './subject-add.component.html',
@@ -15,7 +23,9 @@ export class SubjectAddComponent implements OnInit {
   constructor(
     private subjectService: SubjectService,
     public router: Router,
-    private readonly ui: UIService
+    private readonly ui: UIService,
+    @Inject(POLYMORPHEUS_CONTEXT)
+    private readonly context: TuiDialogContext<boolean>
   ) {}
 
   ngOnInit(): void {}
@@ -25,7 +35,7 @@ export class SubjectAddComponent implements OnInit {
       this.subjectService.addSubject(subject).subscribe(
         () => {
           this.ui.showAlert('Группа успешно добавлена!');
-          this.router.navigate(['/subjects']);
+          this.context.completeWith(true);
         },
         (error) => {
           console.error('Ошибка при добавлении предмета', error);

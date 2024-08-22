@@ -20,7 +20,7 @@ export class LessonEditComponent implements OnInit {
     private router: Router,
     @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<void, any>
+    private readonly context: TuiDialogContext<boolean, any>
   ) {
     this.lessonId = this.context.data.lessonId;
   }
@@ -31,7 +31,7 @@ export class LessonEditComponent implements OnInit {
     this.lessonService.editLesson(this.lessonId, lesson).subscribe(
       () => {
         this.ui.showAlert('Урок успешно обновлен!');
-        this.router.navigate(['/lessons']);
+        this.context.completeWith(true);
       },
       (error: HttpErrorResponse) => {
         console.error('Ошибка при обновлении урока:', error);
