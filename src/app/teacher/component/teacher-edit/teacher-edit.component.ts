@@ -5,15 +5,7 @@ import { UIService } from '../../../../core/common/services/ui.service';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-
-export interface TeacherFormModel {
-  id: number | undefined;
-  firstName: string;
-  secondName: string;
-  lastName: string;
-  jobRole: string;
-  photoPath?: string | undefined;
-}
+import { TeacherFormModel } from '../teacher-form/teacher-form.component';
 
 @Component({
   selector: 'app-teacher-edit',
@@ -43,9 +35,7 @@ export class TeacherEditComponent implements OnInit {
 
   ngOnInit(): void {
     const teacherId = this.context.data.teacherId;
-    console.log(teacherId);
     this.fetchTeacherDetails(teacherId);
-    console.log(teacherId);
   }
 
   handleSave(): void {
@@ -53,20 +43,13 @@ export class TeacherEditComponent implements OnInit {
       console.error('Идентификатор преподавателя отсутствует.');
       return;
     }
-    console.log(this.teacher);
     this.updateTeacher(this.teacher);
-    console.log(this.teacher);
   }
 
   fetchTeacherDetails(teacherId: number): void {
     this.teacherService.getTeacher(teacherId).subscribe(
       (teacher) => {
-        console.log(teacher);
         this.teacher = teacher;
-        console.log(teacher);
-        if (this.teacher.photoPath) {
-          console.log(this.teacher.photoPath);
-        }
       },
       (error) => {
         console.error('Ошибка при получении деталей преподавателя', error);
@@ -75,21 +58,9 @@ export class TeacherEditComponent implements OnInit {
   }
 
   updateTeacher(teacher: TeacherFormModel): void {
-    const teacherData = {
-      id: teacher.id,
-      firstName: teacher.firstName,
-      secondName: teacher.secondName,
-      lastName: teacher.lastName,
-      jobRole: teacher.jobRole,
-      photoPath: teacher.photoPath,
-    };
-    console.log(teacher);
-    console.log(teacherData);
-
-    this.teacherService.updateTeacher(teacher.id!, teacherData).subscribe(
+    this.teacherService.updateTeacher(teacher.id!, teacher).subscribe(
       () => {
-        console.log('Teacher updated:', teacher);
-        this.ui.showAlert('Teacher updated successfully!');
+        this.ui.showAlert('Преподаватель изменен успешно!');
         this.context.completeWith(true);
       },
       (error) => {

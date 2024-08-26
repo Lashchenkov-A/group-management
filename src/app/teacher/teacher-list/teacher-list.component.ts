@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Inject,
-  Injector,
-  ComponentRef,
-} from '@angular/core';
+import { Component, OnInit, Inject, Injector } from '@angular/core';
 import { TeacherService } from '../../../core/teacher/teacher.service';
 import { Teacher } from '../../../core/teacher/teacher.model';
 import { Subject } from 'rxjs';

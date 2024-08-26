@@ -1,0 +1,28 @@
+<form [formGroup]="registerForm" (ngSubmit)="register()" class="auth-form">
+  <h2>Создайте свою учетную запись</h2>
+
+  <tui-input formControlName="username" placeholder="Username" required>
+    Введите логин
+  </tui-input>
+
+  <tui-input-password formControlName="password" required>
+    Введите пароль
+  </tui-input-password>
+
+  <tui-input-password
+    formControlName="confirmPassword"
+    placeholder="Confirm Password"
+    required
+  >
+    Подтвердите свой пароль
+  </tui-input-password>
+
+  <button
+    appearance="primary"
+    tuiButton
+    type="submit"
+    [disabled]="!registerForm.valid"
+  >
+    <img [src]="icon" class="btn-icon" /> Зарегистрироваться
+  </button>
+</form>

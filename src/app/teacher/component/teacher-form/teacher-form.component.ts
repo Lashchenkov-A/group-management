@@ -93,14 +93,10 @@ export class TeacherFormComponent {
       map((result) => {
         if (result) {
           this.teacher.photoPath = result.photoPath;
-          console.log(this.teacher.photoPath);
-
           this.ui.showAlert('Фотография успешно добавлена!');
-          console.log(file);
           return file;
         } else {
           this.previewUrl = null;
-          console.log(this.previewUrl);
 
           this.ui.showAlert('Ошибка при загрузке фотографии.', true);
           this.rejectedFiles$.next(file);
@@ -113,7 +109,6 @@ export class TeacherFormComponent {
 
   public handleSubmit(event: Event): void {
     event.preventDefault();
-    console.log('Форма отправлена с данными:', this.teacher);
     this.onSubmit(this.teacher);
   }
 }

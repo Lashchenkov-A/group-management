@@ -6,7 +6,7 @@
         <h1 class="main_title">{{ pageTitle }}</h1>
       </a>
 
-      <div>
+      <div class="login-container">
         <app-main-navigation></app-main-navigation>
         <ng-container *ngIf="isAuthenticated$ | async; else loginTemplate">
           <tui-button
@@ -14,18 +14,22 @@
             appearance="icon"
             (click)="logout()"
           >
+            <p>Выйти</p>
             <lucide-icon name="log-out"></lucide-icon>
           </tui-button>
         </ng-container>
-        <ng-template #loginTemplate>
-          <tui-button
-            class="login-button"
-            appearance="icon"
-            (click)="openAuthModal()"
-          >
-            <lucide-icon name="log-in"></lucide-icon>
-          </tui-button>
-        </ng-template>
+        <div class="login">
+          <ng-template #loginTemplate>
+            <tui-button
+              class="login-button"
+              appearance="icon"
+              (click)="openAuthModal()"
+            >
+              <p>Войти</p>
+              <lucide-icon name="log-in"></lucide-icon>
+            </tui-button>
+          </ng-template>
+        </div>
       </div>
     </header>
   </section>

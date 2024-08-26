@@ -1,0 +1,11 @@
+.logout-button,
+.login-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+}

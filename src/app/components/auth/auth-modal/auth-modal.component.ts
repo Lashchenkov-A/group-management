@@ -6,9 +6,13 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/auth/auth.service';
-import { TuiDialogContext } from '@taiga-ui/core';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+import {
+  POLYMORPHEUS_CONTEXT,
+  PolymorpheusComponent,
+} from '@tinkoff/ng-polymorpheus';
 import { UIService } from '../../../../core/common/services/ui.service';
+import { RegisterModalComponent } from '../register-modal/register-modal.component';
 
 @Component({
   selector: 'app-auth-modal',
@@ -26,7 +30,8 @@ export class AuthModalComponent {
     private authService: AuthService,
     private readonly ui: UIService,
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<void, void>
+    private readonly context: TuiDialogContext<void, void>,
+    private readonly dialogService: TuiDialogService
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -49,6 +54,19 @@ export class AuthModalComponent {
       );
     }
   }
+
+  openRegister(event: Event) {
+    event.preventDefault();
+    this.close();
+
+    this.dialogService
+      .open<void>(new PolymorpheusComponent(RegisterModalComponent), {
+        dismissible: true,
+        size: 'm',
+      })
+      .subscribe();
+  }
+
   close() {
     this.context.completeWith();
   }

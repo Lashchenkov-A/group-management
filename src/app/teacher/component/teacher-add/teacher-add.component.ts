@@ -37,16 +37,10 @@ export class TeacherAddComponent implements OnInit {
 
   handleSave(): void {
     const file = this.control.value;
-    console.log(file);
-    console.log(this.teacher);
-    console.log(this.control.value);
-
     this.addTeacher(this.teacher);
-    console.log(this.teacher);
   }
 
   addTeacher(teacher: TeacherFormModel): void {
-    console.log(teacher);
     this.teacherService.addTeacher(teacher).subscribe(
       () => {
         this.ui.showAlert('Преподаватель успешно добавлен!');

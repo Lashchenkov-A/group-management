@@ -21,13 +21,11 @@ import {
   TuiInputPasswordModule,
   TuiFilesModule,
   TuiInputFilesModule,
-  TuiFileLike,
-  TuiInputFilesComponent,
   TuiCheckboxModule,
 } from '@taiga-ui/kit';
 import { TUI_DIALOG_CLOSES_ON_BACK, TuiAutoFocusModule } from '@taiga-ui/cdk';
 import { TuiTabBarModule } from '@taiga-ui/addon-mobile';
-import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -35,7 +33,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoaderComponent } from './components/loader/loader.component';
 import { GroupFormComponent } from './group/components/group-form/group-form.component';
 import { GroupAddComponent } from './group/components/group-add/group-add.component';
 import { GroupEditComponent } from './group/components/group-edit/group-edit.component';
@@ -59,13 +56,12 @@ import { TeacherEditComponent } from './teacher/component/teacher-edit/teacher-e
 import { TeacherFormComponent } from './teacher/component/teacher-form/teacher-form.component';
 import { UserScheduleComponent } from './schedule/user-schedule/user-schedule.component';
 import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule/group-schedule.component';
-import { LoginComponent } from './login/login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { AuthInterceptor } from '../core/auth/auth.interceptor';
 import { AuthModalComponent } from './components/auth/auth-modal/auth-modal.component';
 import { AuthService } from '../core/auth/auth.service';
 import { LucideAngularModule, LogIn, LogOut } from 'lucide-angular';
 import { of } from 'rxjs';
+import { RegisterModalComponent } from './components/auth/register-modal/register-modal.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +70,6 @@ import { of } from 'rxjs';
     GroupFormComponent,
     GroupEditComponent,
     GroupAddComponent,
-    LoaderComponent,
     LessonFormComponent,
     LessonListComponent,
     LessonAddComponent,
@@ -94,9 +89,8 @@ import { of } from 'rxjs';
     TeacherFormComponent,
     UserScheduleComponent,
     GroupScheduleComponent,
-    LoginComponent,
-    RegisterComponent,
     AuthModalComponent,
+    RegisterModalComponent,
   ],
   imports: [
     CommonModule,
