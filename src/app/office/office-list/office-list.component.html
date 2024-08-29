@@ -5,7 +5,7 @@
       appearance="icon"
       (click)="openAddOffice(office)"
     >
-      <tui-svg src="tuiIconPlusCircleLarge"></tui-svg>
+      <tui-icon icon="@tui.circle-plus"></tui-icon>
     </tui-button>
   </tui-table-bar>
 
@@ -31,7 +31,7 @@
             (click)="openEditOffice(office)"
             class="edit-button"
           >
-            <tui-svg src="tuiIconEditLarge"></tui-svg>
+            <lucide-icon name="pencil"></lucide-icon>
           </tui-button>
 
           <tui-button
@@ -39,7 +39,7 @@
             (click)="deleteOffice(office)"
             class="delete-button"
           >
-            <tui-svg src="tuiIconTrashLarge"></tui-svg>
+            <lucide-icon name="trash-2"></lucide-icon>
 
             <ng-container *ngIf="loading[office.id]; else notLoading">
               <app-loader></app-loader>
@@ -52,13 +52,15 @@
     <tfoot *ngIf="pagingInfo">
       <tr>
         <td [colSpan]="columns.length">
-          <tui-table-pagination
-            [total]="pagingInfo.total || 0"
-            [size]="pagingInfo.pageSize"
-            [items]="[2, 5, 10, 15]"
-            (pageChange)="onPageChange($event)"
-            (sizeChange)="onSizeChange($event)"
-          ></tui-table-pagination>
+          <div class="pagination-container" *ngIf="pagingInfo">
+            <tui-table-pagination
+              [page]="page"
+              [size]="size"
+              [total]="pagingInfo.total"
+              [items]="[2, 5, 10, 20]"
+              (paginationChange)="onPagination($event)"
+            ></tui-table-pagination>
+          </div>
         </td>
       </tr>
     </tfoot>

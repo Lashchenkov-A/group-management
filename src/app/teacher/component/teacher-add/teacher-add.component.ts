@@ -4,7 +4,7 @@ import { TeacherService } from '../../../../core/teacher/teacher.service';
 import { TeacherFormModel } from '../teacher-form/teacher-form.component';
 import { UIService } from '../../../../core/common/services/ui.service';
 import { FormControl } from '@angular/forms';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { TuiDialogContext } from '@taiga-ui/core';
 
 @Component({

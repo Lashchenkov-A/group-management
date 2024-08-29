@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { LessonService } from '../../../../core/lesson/lesson.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UIService } from '../../../../core/common/services/ui.service';

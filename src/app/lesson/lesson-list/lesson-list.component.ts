@@ -6,11 +6,12 @@ import { takeUntil } from 'rxjs/operators';
 import { Overlay } from '@angular/cdk/overlay';
 import { UIService } from '../../../core/common/services/ui.service';
 import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { Paged } from '../../../core/common/models/pages.model';
 import { Lesson } from '../../../core/lesson/lesson.model';
 import { LessonAddComponent } from '../components/lesson-add/lesson-add.component';
 import { LessonEditComponent } from '../components/lesson-edit/lesson-edit.component';
+import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
 
 @Component({
   selector: 'app-lesson-list',
@@ -20,6 +21,8 @@ import { LessonEditComponent } from '../components/lesson-edit/lesson-edit.compo
 export class LessonListComponent implements OnInit, OnDestroy {
   lessons: Lesson[] = [];
   office: any;
+  page = 1;
+  size = 2;
   loading: { [key: number]: boolean } = {};
   pagingInfo: Paged<void> | null = null;
   private readonly destroy$ = new Subject<void>();
@@ -45,19 +48,14 @@ export class LessonListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onPageChange(data: number) {
-    if (this.pagingInfo) {
-      this.fetchLessons(data + 1, this.pagingInfo.pageSize);
-    }
+  onPagination({ page, size }: TuiTablePaginationEvent): void {
+    this.page = page;
+    this.size = size;
+    this.fetchLessons(this.page, this.size);
   }
 
-  onSizeChange(data: number) {
-    if (this.pagingInfo) {
-      this.pagingInfo.pageSize = data;
-    }
-  }
   fetchLessons(page: number, pageSize: number): void {
-    this.lessonService.getLessons(page, pageSize).subscribe(
+    this.lessonService.getLessons(page + 1, pageSize).subscribe(
       (res) => {
         this.lessons = res.data;
         this.pagingInfo = { ...res, data: [] };
@@ -108,10 +106,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
           this.lessonService.deleteLesson(id).subscribe({
             next: () => {
               this.ui.showAlert(`Занятие успешно удалено`);
-              this.fetchLessons(
-                this.pagingInfo!.page,
-                this.pagingInfo!.pageSize
-              );
+              this.fetchLessons(this.page, this.size);
               delete this.loading[id];
             },
             error: (error) => {

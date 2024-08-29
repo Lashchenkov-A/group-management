@@ -1,44 +1,17 @@
-<tui-root *ngIf="isAdmin$ | async">
-  <nav tuiTabBar class="container">
-    <a
-      icon="tuiIconMenuLarge"
-      routerLink="/lessons"
-      routerLinkActive
-      tuiTabBarItem
-    >
-      Пары
-    </a>
-    <a
-      icon="tuiIconHomeLarge"
-      routerLink="/offices"
-      routerLinkActive
-      tuiTabBarItem
-    >
-      Кабинет
-    </a>
-    <a
-      icon="tuiIconUserLarge"
-      routerLink="/teachers"
-      routerLinkActive
-      tuiTabBarItem
-    >
-      Преподаватели
-    </a>
-    <a
-      icon="tuiIconPenToolLarge"
-      routerLink="/subjects"
-      routerLinkActive
-      tuiTabBarItem
-    >
-      Предмет
-    </a>
-    <a
-      icon="tuiIconUsersLarge"
-      routerLink="/groups"
-      routerLinkActive
-      tuiTabBarItem
-    >
-      Группы
-    </a>
-  </nav>
-</tui-root>
+<nav class="navbar" *ngIf="isAdmin$ | async">
+  <a href="/lessons" class="nav-item">
+    <span>Пары</span>
+  </a>
+  <a href="/offices" class="nav-item">
+    <span>Кабинет</span>
+  </a>
+  <a href="/teachers" class="nav-item">
+    <span>Преподаватели</span>
+  </a>
+  <a href="/subjects" class="nav-item">
+    <span>Предмет</span>
+  </a>
+  <a href="/groups" class="nav-item">
+    <span>Группы</span>
+  </a>
+</nav>

@@ -17,11 +17,11 @@ export class ScheduleService {
       .set('week', week)
       .set('groupId', groupId);
 
-    return this.http.get<any>(`${this.apiPath}/lesson/search`, { params });
+    return this.http.get<any>(`${this.apiPath}lesson/search`, { params });
   }
 
   findGroupByNumber(groupNumber: string): Observable<any> {
-    return this.http.get<any>(`${this.apiPath}/group/search`, {
+    return this.http.get<any>(`${this.apiPath}group/search`, {
       params: {
         name: groupNumber,
       },

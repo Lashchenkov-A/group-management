@@ -9,7 +9,7 @@ import { SubjectService } from '../../../../core/subject/subject.service';
 import { SubjectFormModel } from '../subject-form/subject-form.component';
 import { UIService } from '../../../../core/common/services/ui.service';
 import { TuiDialogContext } from '@taiga-ui/core';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 
 @Component({
   selector: 'app-subject-add',
@@ -34,7 +34,7 @@ export class SubjectAddComponent implements OnInit {
     if (subject.name.trim() !== '') {
       this.subjectService.addSubject(subject).subscribe(
         () => {
-          this.ui.showAlert('Группа успешно добавлена!');
+          this.ui.showAlert('Предмет успешно добавлена!');
           this.context.completeWith(true);
         },
         (error) => {

@@ -13,10 +13,11 @@ import { Router } from '@angular/router';
 import { Overlay } from '@angular/cdk/overlay';
 import { UIService } from '../../../core/common/services/ui.service';
 import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { OfficeEditComponent } from '../components/office-edit/office-edit.component';
 import { Paged } from '../../../core/common/models/pages.model';
 import { OfficeAddComponent } from '../components/office-add/office-add.component';
+import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
 
 @Component({
   selector: 'app-office-list',
@@ -25,6 +26,8 @@ import { OfficeAddComponent } from '../components/office-add/office-add.componen
 })
 export class OfficeListComponent implements OnInit {
   office: any;
+  page = 1;
+  size = 2;
   showDialog() {
     throw new Error('Method not implemented.');
   }
@@ -53,20 +56,14 @@ export class OfficeListComponent implements OnInit {
     this.destroy$.complete();
   }
 
-  onPageChange(data: number) {
-    if (this.pagingInfo) {
-      this.fetchOffices(data + 1, this.pagingInfo.pageSize);
-    }
-  }
-
-  onSizeChange(data: number) {
-    if (this.pagingInfo) {
-      this.pagingInfo.pageSize = data;
-    }
+  onPagination({ page, size }: TuiTablePaginationEvent): void {
+    this.page = page;
+    this.size = size;
+    this.fetchOffices(this.page, this.size);
   }
 
   fetchOffices(page: number, pageSize: number): void {
-    this.officeService.getOffices(page, pageSize).subscribe(
+    this.officeService.getOffices(page + 1, pageSize).subscribe(
       (res) => {
         this.offices = res.data;
         this.pagingInfo = { ...res, data: [] };
@@ -85,10 +82,7 @@ export class OfficeListComponent implements OnInit {
           this.officeService.deleteOffice(id).subscribe({
             next: () => {
               this.ui.showAlert(`Кабинет успешно удален`);
-              this.fetchOffices(
-                this.pagingInfo!.page,
-                this.pagingInfo!.pageSize
-              );
+              this.fetchOffices(this.page, this.size);
               delete this.loading[id];
             },
             error: (error) => {
@@ -124,7 +118,7 @@ export class OfficeListComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          this.fetchOffices(this.pagingInfo!.page, this.pagingInfo!.pageSize);
+          this.fetchOffices(this.page, this.size);
         },
       });
   }

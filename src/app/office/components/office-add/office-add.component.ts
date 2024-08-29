@@ -9,7 +9,7 @@ import { OfficeService } from '../../../../core/office/office.service';
 import { OfficeFormModel } from '../office-form/office-form.component';
 import { UIService } from '../../../../core/common/services/ui.service';
 import { TuiDialogContext } from '@taiga-ui/core';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 @Component({
   selector: 'app-office-add',
   templateUrl: './office-add.component.html',

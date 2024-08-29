@@ -13,7 +13,7 @@ export class GroupService {
 
   constructor(private http: HttpClient) {}
 
-  getGroups(page: number = 1, pageSize = 10): Observable<Paged<Group>> {
+  getGroups(page: number = 1, pageSize = 2): Observable<Paged<Group>> {
     let params = new HttpParams();
     params = params.append('page', page);
     params = params.append('pageSize', pageSize);

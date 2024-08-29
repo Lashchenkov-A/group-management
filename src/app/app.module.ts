@@ -1,31 +1,32 @@
-import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
+import { TuiTabBar } from '@taiga-ui/addon-mobile';
 import {
-  TuiRootModule,
-  TuiDialogModule,
-  TuiAlertModule,
-  TUI_SANITIZER,
-  TuiSvgModule,
-  TuiButtonModule,
-  TuiFormatNumberPipeModule,
-  TuiDataListModule,
   TuiTextfieldControllerModule,
-} from '@taiga-ui/core';
-import {
-  TuiTableModule,
-  TuiTablePaginationModule,
-} from '@taiga-ui/addon-table';
-import {
+  TUI_SANITIZER,
   TuiInputModule,
-  TuiSelectModule,
-  TuiDataListWrapperModule,
   TuiInputPasswordModule,
-  TuiFilesModule,
-  TuiInputFilesModule,
-  TuiCheckboxModule,
+  TuiSelectModule,
+} from '@taiga-ui/legacy';
+import { NgDompurifySanitizer } from '@taiga-ui/dompurify';
+import {
+  TuiRoot,
+  TuiAlert,
+  TuiFormatNumberPipe,
+  TuiDataList,
+  TuiIcon,
+  TuiDialog,
+  TuiButton,
+  TuiError,
+} from '@taiga-ui/core';
+import { TuiTablePagination, TuiTable } from '@taiga-ui/addon-table';
+import {
+  TuiDataListWrapper,
+  TuiFiles,
+  TuiCheckbox,
+  TuiFieldErrorPipe,
+  TUI_VALIDATION_ERRORS,
 } from '@taiga-ui/kit';
-import { TUI_DIALOG_CLOSES_ON_BACK, TuiAutoFocusModule } from '@taiga-ui/cdk';
-import { TuiTabBarModule } from '@taiga-ui/addon-mobile';
-import { CommonModule } from '@angular/common';
+import { TuiAutoFocus } from '@taiga-ui/cdk';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -59,7 +60,18 @@ import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule
 import { AuthInterceptor } from '../core/auth/auth.interceptor';
 import { AuthModalComponent } from './components/auth/auth-modal/auth-modal.component';
 import { AuthService } from '../core/auth/auth.service';
-import { LucideAngularModule, LogIn, LogOut } from 'lucide-angular';
+import {
+  LucideAngularModule,
+  LogIn,
+  LogOut,
+  Pencil,
+  Trash2,
+  BookOpenCheck,
+  House,
+  PenTool,
+  UserRound,
+  UsersRound,
+} from 'lucide-angular';
 import { of } from 'rxjs';
 import { RegisterModalComponent } from './components/auth/register-modal/register-modal.component';
 
@@ -99,35 +111,55 @@ import { RegisterModalComponent } from './components/auth/register-modal/registe
     FormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    TuiRootModule,
-    TuiAlertModule,
-    TuiDialogModule,
-    TuiTableModule,
-    TuiFormatNumberPipeModule,
+    TuiRoot,
+    TuiAlert,
+    TuiDialog,
+    ...TuiTable,
+    TuiFormatNumberPipe,
     TuiInputModule,
-    TuiButtonModule,
-    TuiTablePaginationModule,
+    TuiButton,
+    TuiTablePagination,
     ReactiveFormsModule,
-    TuiSvgModule,
+    TuiIcon,
     TuiSelectModule,
-    TuiAutoFocusModule,
-    TuiDataListWrapperModule,
-    TuiDataListModule,
+    TuiAutoFocus,
+    ...TuiDataListWrapper,
+    ...TuiDataList,
     TuiTextfieldControllerModule,
-    TuiTabBarModule,
+    ...TuiTabBar,
     TuiInputPasswordModule,
-    LucideAngularModule.pick({ LogIn, LogOut }),
-    TuiFilesModule,
-    TuiFilesModule,
-    TuiInputFilesModule,
-    TuiCheckboxModule,
+    LucideAngularModule.pick({
+      LogIn,
+      LogOut,
+      Pencil,
+      Trash2,
+      BookOpenCheck,
+      House,
+      UserRound,
+      UsersRound,
+      PenTool,
+    }),
+    ...TuiFiles,
+    TuiCheckbox,
+    TuiFieldErrorPipe,
+    AsyncPipe,
+    TuiError,
   ],
   bootstrap: [AppComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: TUI_SANITIZER, useClass: NgDompurifySanitizer },
     AuthService,
-    { provide: TUI_DIALOG_CLOSES_ON_BACK, useValue: of(true) },
+    {
+      provide: TUI_VALIDATION_ERRORS,
+      useValue: {
+        maxlength: ({ requiredLength }: { requiredLength: string }) =>
+          `Максимальная длина — ${requiredLength}`,
+        minlength: ({ requiredLength }: { requiredLength: string }) =>
+          of(`Минимальная длина — ${requiredLength}`),
+        required: () => `Это поле обязательно для заполнения`,
+      },
+    },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

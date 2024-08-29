@@ -1,6 +1,6 @@
+import { TUI_CONFIRM } from "@taiga-ui/kit";
 import { Inject, Injectable } from '@angular/core';
 import { TuiAlertService, TuiDialogService } from '@taiga-ui/core';
-import { TUI_PROMPT } from '@taiga-ui/kit';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class UIService {
   showAlert(message: string, isError: boolean = false) {
     this.alerts
       .open(message, {
-        status: isError ? 'error' : 'success',
+        appearance: isError ? 'error' : 'success',
       })
       .subscribe();
   }
@@ -25,7 +25,7 @@ export class UIService {
     yes: string = 'Yes',
     no: string = 'No'
   ) {
-    return this.dialogs.open<boolean>(TUI_PROMPT, {
+    return this.dialogs.open<boolean>(TUI_CONFIRM, {
       label,
       size: 'm',
       data: { content, yes, no },

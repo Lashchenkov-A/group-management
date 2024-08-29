@@ -4,7 +4,7 @@ import { filter, map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { AuthModalComponent } from './components/auth/auth-modal/auth-modal.component';
 import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { AuthService } from '../core/auth/auth.service';
 @Component({
   selector: 'app-root',

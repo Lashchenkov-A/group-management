@@ -9,7 +9,7 @@ import { GroupService } from '../../../../core/group/group.service';
 import { GroupFormModel } from '../group-form/group-form.component';
 import { UIService } from '../../../../core/common/services/ui.service';
 import { TuiDialogContext } from '@taiga-ui/core';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 
 @Component({
   selector: 'app-group-add',

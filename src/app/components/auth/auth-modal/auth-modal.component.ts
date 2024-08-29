@@ -1,8 +1,8 @@
 import {
-  Component,
-  Input,
   ChangeDetectionStrategy,
+  Component,
   Inject,
+  Input,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/auth/auth.service';
@@ -10,7 +10,7 @@ import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import {
   POLYMORPHEUS_CONTEXT,
   PolymorpheusComponent,
-} from '@tinkoff/ng-polymorpheus';
+} from '@taiga-ui/polymorpheus';
 import { UIService } from '../../../../core/common/services/ui.service';
 import { RegisterModalComponent } from '../register-modal/register-modal.component';
 
@@ -34,7 +34,14 @@ export class AuthModalComponent {
     private readonly dialogService: TuiDialogService
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      username: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(20),
+        ],
+      ],
       password: ['', Validators.required],
     });
   }

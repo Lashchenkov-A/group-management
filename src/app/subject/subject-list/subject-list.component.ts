@@ -11,12 +11,13 @@ import { Router } from '@angular/router';
 import { Overlay } from '@angular/cdk/overlay';
 import { UIService } from '../../../core/common/services/ui.service';
 import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { Paged } from '../../../core/common/models/pages.model';
 import { SubjectService } from '../../../core/subject/subject.service';
 import { SubjectEditComponent } from '../components/subject-edit/subject-edit.component';
 import { Subjects } from '../../../core/subject/subject.model';
 import { SubjectAddComponent } from '../components/subject-add/subject-add.component';
+import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
 
 @Component({
   selector: 'app-subject-list',
@@ -25,6 +26,8 @@ import { SubjectAddComponent } from '../components/subject-add/subject-add.compo
 })
 export class SubjectListComponent implements OnInit {
   subject: any;
+  page = 1;
+  size = 2;
   showDialog() {
     throw new Error('Method not implemented.');
   }
@@ -53,20 +56,14 @@ export class SubjectListComponent implements OnInit {
     this.destroy$.complete();
   }
 
-  onPageChange(data: number) {
-    if (this.pagingInfo) {
-      this.fetchSubjects(data + 1, this.pagingInfo.pageSize);
-    }
-  }
-
-  onSizeChange(data: number) {
-    if (this.pagingInfo) {
-      this.pagingInfo.pageSize = data;
-    }
+  onPagination({ page, size }: TuiTablePaginationEvent): void {
+    this.page = page;
+    this.size = size;
+    this.fetchSubjects(this.page, this.size);
   }
 
   fetchSubjects(page: number, pageSize: number): void {
-    this.subjectService.getSubjects(page, pageSize).subscribe(
+    this.subjectService.getSubjects(page + 1, pageSize).subscribe(
       (res) => {
         this.subjects = res.data;
         this.pagingInfo = { ...res, data: [] };
@@ -84,11 +81,8 @@ export class SubjectListComponent implements OnInit {
           this.loading[id] = true;
           this.subjectService.deleteSubject(id).subscribe({
             next: () => {
-              this.ui.showAlert(`Группа ${subject.name} успешно удалена`);
-              this.fetchSubjects(
-                this.pagingInfo!.page,
-                this.pagingInfo!.pageSize
-              );
+              this.ui.showAlert(`Предмет ${subject.name} успешно удален`);
+              this.fetchSubjects(this.page, this.size);
               delete this.loading[id];
             },
             error: (error) => {
@@ -124,7 +118,7 @@ export class SubjectListComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          this.fetchSubjects(this.pagingInfo!.page, this.pagingInfo!.pageSize);
+          this.fetchSubjects(this.page, this.size);
         },
       });
   }

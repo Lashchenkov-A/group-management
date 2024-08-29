@@ -1,7 +1,7 @@
 <div class="lesson-list-container">
   <tui-table-bar>
     <tui-button class="add-button" appearance="icon" (click)="showDialog()">
-      <tui-svg src="tuiIconPlusCircleLarge"></tui-svg>
+      <tui-icon icon="@tui.circle-plus"></tui-icon>
     </tui-button>
   </tui-table-bar>
 
@@ -43,14 +43,14 @@
             (click)="showDialogs(lesson.id)"
             class="edit-button"
           >
-            <tui-svg src="tuiIconEditLarge"></tui-svg>
+            <lucide-icon name="pencil"></lucide-icon>
           </tui-button>
           <tui-button
             appearance="icon"
             (click)="deleteLesson(lesson)"
             class="delete-button"
           >
-            <tui-svg src="tuiIconTrashLarge"></tui-svg>
+            <lucide-icon name="trash-2"></lucide-icon>
           </tui-button>
         </td>
       </tr>
@@ -58,13 +58,15 @@
     <tfoot *ngIf="pagingInfo">
       <tr>
         <td [colSpan]="columns.length">
-          <tui-table-pagination
-            [total]="pagingInfo.total || 0"
-            [size]="pagingInfo.pageSize"
-            [items]="[5, 10, 15, 20, 25, 30]"
-            (pageChange)="onPageChange($event)"
-            (sizeChange)="onSizeChange($event)"
-          ></tui-table-pagination>
+          <div class="pagination-container" *ngIf="pagingInfo">
+            <tui-table-pagination
+              [page]="page"
+              [size]="size"
+              [total]="pagingInfo.total"
+              [items]="[2, 5, 10, 20]"
+              (paginationChange)="onPagination($event)"
+            ></tui-table-pagination>
+          </div>
         </td>
       </tr>
     </tfoot>

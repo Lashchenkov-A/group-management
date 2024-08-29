@@ -75,8 +75,8 @@ export class GroupScheduleComponent implements OnInit {
   }
 
   changeWeek(diff: number) {
-    this.currentWeek.start.add(diff, 'week');
-    this.currentWeek = this.getDateWeekData(this.currentWeek.start);
+    const newStart = this.currentWeek.start.clone().add(diff, 'week');
+    this.currentWeek = this.getDateWeekData(newStart);
     this.renderCurrentWeekDate(this.currentWeek);
     const queryGroup = this.route.snapshot.queryParams['group'];
     if (queryGroup) {

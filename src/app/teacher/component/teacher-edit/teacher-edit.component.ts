@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { TeacherService } from '../../../../core/teacher/teacher.service';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { UIService } from '../../../../core/common/services/ui.service';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TeacherFormModel } from '../teacher-form/teacher-form.component';

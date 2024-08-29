@@ -8,7 +8,11 @@
     style="margin: 10px"
   >
     Имя
-    <input placeholder="Введите имя преподавателя" tuiTextfield type="text" />
+    <input
+      placeholder="Введите имя преподавателя"
+      tuiTextfieldLegacy
+      type="text"
+    />
   </tui-input>
   <tui-input
     tuiAutoFocus
@@ -21,7 +25,7 @@
     Отчество
     <input
       placeholder="Введите отчество преподавателя"
-      tuiTextfield
+      tuiTextfieldLegacy
       type="text"
     />
   </tui-input>
@@ -36,7 +40,7 @@
     Фамилия
     <input
       placeholder="Введите фамилию преподавателя"
-      tuiTextfield
+      tuiTextfieldLegacy
       type="text"
     />
   </tui-input>
@@ -51,40 +55,44 @@
     Должность
     <input
       placeholder="Введите должность преподавателя"
-      tuiTextfield
+      tuiTextfieldLegacy
       type="text"
     />
   </tui-input>
 
-  <tui-input-files
-    *ngIf="!control.value"
-    accept="image/*"
-    [formControl]="control"
-    (reject)="onReject($event)"
-  ></tui-input-files>
+  <label *ngIf="!control.value" tuiInputFiles>
+    <input accept="image/*" tuiInputFiles [formControl]="control" />
+  </label>
 
   <tui-files class="tui-space_top-1">
     <tui-file
-      *ngIf="loadedFiles$ | async as file"
-      [file]="file"
-      [showDelete]="control.enabled"
-      (removed)="removeFile()"
-    ></tui-file>
-
-    <tui-file
-      *ngIf="rejectedFiles$ | async as file"
+      *ngIf="
+        control.value | tuiFileRejected : { accept: 'image/*' } | async as file
+      "
       state="error"
       [file]="file"
-      [showDelete]="control.enabled"
-      (removed)="clearRejected()"
-    ></tui-file>
+      (remove)="removeFile()"
+    />
+
+    <tui-file
+      *ngIf="loadedFiles$ | async as file"
+      [file]="file"
+      (remove)="removeFile()"
+    />
+
+    <tui-file
+      *ngIf="failedFiles$ | async as file"
+      state="error"
+      [file]="file"
+      (remove)="removeFile()"
+    />
 
     <tui-file
       *ngIf="loadingFiles$ | async as file"
       state="loading"
       [file]="file"
-      [showDelete]="control.enabled"
-    ></tui-file>
+      (remove)="removeFile()"
+    />
   </tui-files>
 
   <div *ngIf="previewUrl" class="photo-preview">

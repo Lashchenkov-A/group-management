@@ -4,7 +4,7 @@ import { Office } from '../../../../core/office/office.model';
 import { OfficeFormModel } from '../office-form/office-form.component';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { UIService } from '../../../../core/common/services/ui.service';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 
 @Component({
   selector: 'app-office-edit',

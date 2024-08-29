@@ -3,3 +3,7 @@
   gap: 12px;
   flex-direction: column;
 }
+
+.error {
+  color: var(--tui-text-negative);
+}

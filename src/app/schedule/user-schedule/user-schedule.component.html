@@ -5,8 +5,8 @@
         <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
           <input
             formControlName="searchInput"
-            type="text"
-            placeholder="Введите № группы / Ф.И.О. преподавателя"
+            type="number"
+            placeholder="Введите № группы"
             maxlength="30"
             required
           />

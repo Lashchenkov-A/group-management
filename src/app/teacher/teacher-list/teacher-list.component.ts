@@ -7,10 +7,11 @@ import { Router } from '@angular/router';
 import { Overlay } from '@angular/cdk/overlay';
 import { UIService } from '../../../core/common/services/ui.service';
 import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { Paged } from '../../../core/common/models/pages.model';
 import { TeacherEditComponent } from '../component/teacher-edit/teacher-edit.component';
 import { TeacherAddComponent } from '../component/teacher-add/teacher-add.component';
+import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
 
 @Component({
   selector: 'app-teacher-list',
@@ -19,6 +20,8 @@ import { TeacherAddComponent } from '../component/teacher-add/teacher-add.compon
 })
 export class TeacherListComponent implements OnInit {
   teacher: any;
+  page = 1;
+  size = 2;
   showDialog() {
     throw new Error('Method not implemented.');
   }
@@ -53,20 +56,14 @@ export class TeacherListComponent implements OnInit {
     this.destroy$.complete();
   }
 
-  onPageChange(data: number) {
-    if (this.pagingInfo) {
-      this.fetchTeachers(data + 1, this.pagingInfo.pageSize);
-    }
-  }
-
-  onSizeChange(data: number) {
-    if (this.pagingInfo) {
-      this.pagingInfo.pageSize = data;
-    }
+  onPagination({ page, size }: TuiTablePaginationEvent): void {
+    this.page = page;
+    this.size = size;
+    this.fetchTeachers(this.page, this.size);
   }
 
   fetchTeachers(page: number, pageSize: number): void {
-    this.teacherService.getTeachers(page, pageSize).subscribe(
+    this.teacherService.getTeachers(page + 1, pageSize).subscribe(
       (res) => {
         this.teachers = res.data;
         this.pagingInfo = { ...res, data: [] };
@@ -87,10 +84,7 @@ export class TeacherListComponent implements OnInit {
               this.ui.showAlert(
                 `Преподаватель "${teacher.jobRole} ${teacher.firstName} ${teacher.secondName} ${teacher.lastName}" успешно удален`
               );
-              this.fetchTeachers(
-                this.pagingInfo!.page,
-                this.pagingInfo!.pageSize
-              );
+              this.fetchTeachers(this.page, this.size);
               delete this.loading[id];
             },
             error: (error) => {
@@ -126,7 +120,7 @@ export class TeacherListComponent implements OnInit {
       )
       .subscribe({
         next: (data) => {
-          this.fetchTeachers(this.pagingInfo!.page, this.pagingInfo!.pageSize);
+          this.fetchTeachers(this.page, this.size);
         },
       });
   }

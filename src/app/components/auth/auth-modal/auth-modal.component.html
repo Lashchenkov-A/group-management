@@ -1,15 +1,23 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()" class="auth-form">
-  <h2>Login</h2>
-  <tui-input formControlName="username" placeholder="Username" required
-    >Type a login</tui-input
-  >
+  <h2>Вход</h2>
+  <label tuiLabel class="tui-space_bottom-4">
+    <tui-input formControlName="username" placeholder="Username" required
+      >Введите логин</tui-input
+    >
+    <tui-error
+      formControlName="username"
+      [error]="[] | tuiFieldError | async"
+    />
+  </label>
 
-  <tui-input-password
-    formControlName="password"
-    [tuiTextfieldLabelOutside]="true"
-  >
-    Type a password
-  </tui-input-password>
+  <label tuiLabel class="tui-space_bottom-4">
+    <tui-input-password
+      formControlName="password"
+      [tuiTextfieldLabelOutside]="true"
+    >
+      Введите пароль
+    </tui-input-password>
+  </label>
   <button
     appearance="primary"
     tuiButton

@@ -4,7 +4,7 @@ import { Subjects } from '../../../../core/subject/subject.model';
 import { SubjectFormModel } from '../subject-form/subject-form.component';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { UIService } from '../../../../core/common/services/ui.service';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 
 @Component({
   selector: 'app-subject-edit',

@@ -4,7 +4,7 @@ import { Group } from '../../../../core/group/group.model';
 import { GroupFormModel } from '../group-form/group-form.component';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { UIService } from '../../../../core/common/services/ui.service';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 
 @Component({
   selector: 'app-group-edit',

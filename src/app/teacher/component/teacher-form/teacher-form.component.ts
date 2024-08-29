@@ -80,6 +80,7 @@ export class TeacherFormComponent {
     this.removeFile();
     this.rejectedFiles$.next(null);
   }
+  protected readonly failedFiles$ = new Subject<TuiFileLike | null>();
 
   makeRequest(file: TuiFileLike): Observable<TuiFileLike | null> {
     this.setPreviewFromFile(file as File);

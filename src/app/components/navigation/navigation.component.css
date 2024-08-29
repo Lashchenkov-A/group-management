@@ -1,10 +1,36 @@
-.tabs {
-  color: var(--tui-link);
-
-  --tui-active-color: var(--tui-accent);
-  background-color: #3c4ee900;
+body {
+  font-family: Arial, sans-serif;
 }
 
-.container {
-  gap: 15px;
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #277db4;
+  padding: 10px 0;
+  margin: 0;
+  border-radius: 4px;
+}
+
+.nav-item {
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  padding: 10px;
+}
+
+.nav-item i {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.nav-item:hover {
+  background-color: #1f6294;
+  border-radius: 4px;
+}
+
+.nav-item span {
+  display: block;
 }

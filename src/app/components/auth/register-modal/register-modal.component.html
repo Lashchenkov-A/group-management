@@ -1,9 +1,15 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()" class="auth-form">
   <h2>Создайте свою учетную запись</h2>
 
-  <tui-input formControlName="username" placeholder="Username" required>
-    Введите логин
-  </tui-input>
+  <label tuiLabel class="tui-space_bottom-4">
+    <tui-input formControlName="username" placeholder="Username" required>
+      Введите логин
+    </tui-input>
+    <tui-error
+      formControlName="username"
+      [error]="[] | tuiFieldError | async"
+    />
+  </label>
 
   <tui-input-password formControlName="password" required>
     Введите пароль
@@ -16,13 +22,20 @@
   >
     Подтвердите свой пароль
   </tui-input-password>
-
-  <button
-    appearance="primary"
-    tuiButton
-    type="submit"
-    [disabled]="!registerForm.valid"
+  <a
+    *ngIf="
+      registerForm.get('confirmPassword')?.touched &&
+      registerForm.get('confirmPassword')?.hasError('mismatch')
+    "
+    class="error"
   >
+    Пароли не совпадают
+  </a>
+
+  <button appearance="primary" tuiButton type="submit">
     <img [src]="icon" class="btn-icon" /> Зарегистрироваться
   </button>
+  <p>
+    <a href="#" (click)="openLogin($event)">У меня есть логин и пароль</a>
+  </p>
 </form>

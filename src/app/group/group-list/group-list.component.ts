@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Inject,
-  Injector,
-  ComponentRef,
-} from '@angular/core';
+import { Component, OnInit, Inject, Injector } from '@angular/core';
 import { GroupService } from '../../../core/group/group.service';
 import { Group } from '../../../core/group/group.model';
 import { Subject } from 'rxjs';
@@ -13,10 +7,11 @@ import { Router } from '@angular/router';
 import { Overlay } from '@angular/cdk/overlay';
 import { UIService } from '../../../core/common/services/ui.service';
 import { TuiDialogService } from '@taiga-ui/core';
-import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { GroupEditComponent } from '../components/group-edit/group-edit.component';
 import { Paged } from '../../../core/common/models/pages.model';
 import { GroupAddComponent } from '../components/group-add/group-add.component';
+import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
 
 @Component({
   selector: 'app-group-list',
@@ -25,6 +20,8 @@ import { GroupAddComponent } from '../components/group-add/group-add.component';
 })
 export class GroupListComponent implements OnInit {
   group: any;
+  page = 1;
+  size = 2;
   showDialog() {
     throw new Error('Method not implemented.');
   }
@@ -53,20 +50,14 @@ export class GroupListComponent implements OnInit {
     this.destroy$.complete();
   }
 
-  onPageChange(data: number) {
-    if (this.pagingInfo) {
-      this.fetchGroups(data + 1, this.pagingInfo.pageSize);
-    }
-  }
-
-  onSizeChange(data: number) {
-    if (this.pagingInfo) {
-      this.pagingInfo.pageSize = data;
-    }
+  onPagination({ page, size }: TuiTablePaginationEvent): void {
+    this.page = page;
+    this.size = size;
+    this.fetchGroups(this.page, this.size);
   }
 
   fetchGroups(page: number, pageSize: number): void {
-    this.groupService.getGroups(page, pageSize).subscribe(
+    this.groupService.getGroups(page + 1, pageSize).subscribe(
       (res) => {
         this.groups = res.data;
         this.pagingInfo = { ...res, data: [] };
@@ -85,10 +76,7 @@ export class GroupListComponent implements OnInit {
           this.groupService.deleteGroup(id).subscribe({
             next: () => {
               this.ui.showAlert(`Группа ${group.name} успешно удалена`);
-              this.fetchGroups(
-                this.pagingInfo!.page,
-                this.pagingInfo!.pageSize
-              );
+              this.fetchGroups(this.page, this.size);
               delete this.loading[id];
             },
             error: (error) => {
@@ -123,8 +111,8 @@ export class GroupListComponent implements OnInit {
         }
       )
       .subscribe({
-        next: (data) => {
-          this.fetchGroups(this.pagingInfo!.page, this.pagingInfo!.pageSize);
+        next: () => {
+          this.fetchGroups(this.page, this.size);
         },
       });
   }

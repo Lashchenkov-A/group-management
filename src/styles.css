@@ -2,27 +2,10 @@
   margin: 0;
 }
 
-@font-face {
-  font-family: "FoglihtenNo06";
-  src: url("/assets/fonts/foglihtenno06.woff2") format("woff2"),
-    url("/assets/fonts/foglihtenno06.woff") format("woff"),
-    url("/assets/fonts/foglihtenno06.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "roboto-regular";
-  src: url("/assets/fonts/roboto-regular.woff2") format("woff2"),
-    url("/assets/fonts/roboto-regular.woff") format("woff"),
-    url("/assets/fonts/roboto-regular.ttf") format("truetype");
-}
-
 body {
   font-family: "roboto-regular";
   font-size: 50px;
   color: black;
-  background-color: #e5e5e5e5;
   padding: 0;
   display: flex;
   flex-direction: column;
