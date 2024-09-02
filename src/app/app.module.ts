@@ -74,6 +74,7 @@ import {
 } from 'lucide-angular';
 import { of } from 'rxjs';
 import { RegisterModalComponent } from './components/auth/register-modal/register-modal.component';
+import { GroupReplaceComponent } from './group/components/group-replace/group-replace/group-replace.component';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { RegisterModalComponent } from './components/auth/register-modal/registe
     GroupScheduleComponent,
     AuthModalComponent,
     RegisterModalComponent,
+    GroupReplaceComponent,
   ],
   imports: [
     CommonModule,

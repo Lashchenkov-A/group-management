@@ -13,7 +13,7 @@ export class LessonService {
 
   constructor(private http: HttpClient) {}
 
-  getLessons(page: number = 1, pageSize = 10): Observable<Paged<Lesson>> {
+  getLessons(page: number = 1, pageSize = 20): Observable<Paged<Lesson>> {
     let params = new HttpParams();
     params = params.append('page', page);
     params = params.append('pageSize', pageSize);

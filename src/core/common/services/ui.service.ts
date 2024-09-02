@@ -1,4 +1,4 @@
-import { TUI_CONFIRM } from "@taiga-ui/kit";
+import { TUI_CONFIRM } from '@taiga-ui/kit';
 import { Inject, Injectable } from '@angular/core';
 import { TuiAlertService, TuiDialogService } from '@taiga-ui/core';
 
@@ -22,8 +22,8 @@ export class UIService {
   confirmModal(
     label: string,
     content: string,
-    yes: string = 'Yes',
-    no: string = 'No'
+    yes: string = 'Да',
+    no: string = 'Нет'
   ) {
     return this.dialogs.open<boolean>(TUI_CONFIRM, {
       label,

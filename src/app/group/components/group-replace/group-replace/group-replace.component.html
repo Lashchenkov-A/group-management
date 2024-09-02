@@ -1,0 +1,35 @@
+<form [formGroup]="groupForm" class="form">
+  <label for="GroupIdInput"
+    >Группа используется в парах, если вы хотите удалить эту группу, выберите
+    кому переназначить пары.</label
+  >
+  <tui-select
+    formControlName="groupId"
+    tuiTextfieldSize="m"
+    [stringify]="groupStringify"
+  >
+    <tui-data-list-wrapper
+      *tuiDataList
+      [itemContent]="groupsContent"
+      [items]="groups"
+      [itemValue]="'id'"
+    >
+      <ng-template #groupsContent let-item>
+        {{ item.name }}
+      </ng-template>
+    </tui-data-list-wrapper>
+  </tui-select>
+  <div class="actions">
+    <button
+      tuiButton
+      appearance="primary"
+      [disabled]="!groupForm.get('groupId')?.value"
+      (click)="confirmReplacement()"
+    >
+      Заменить
+    </button>
+  </div>
+  <a href="#" (click)="confirmDeleteGroupWithLessons($event)"
+    >Я хочу удалить все связанные пары вместе с группой</a
+  >
+</form>

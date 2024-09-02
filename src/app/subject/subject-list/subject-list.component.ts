@@ -27,7 +27,7 @@ import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
 export class SubjectListComponent implements OnInit {
   subject: any;
   page = 1;
-  size = 2;
+  size = 20;
   showDialog() {
     throw new Error('Method not implemented.');
   }
@@ -48,7 +48,7 @@ export class SubjectListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchSubjects(1, 2);
+    this.fetchSubjects(1, 20);
   }
 
   ngOnDestroy(): void {
@@ -57,13 +57,13 @@ export class SubjectListComponent implements OnInit {
   }
 
   onPagination({ page, size }: TuiTablePaginationEvent): void {
-    this.page = page;
+    this.page = page + 1;
     this.size = size;
     this.fetchSubjects(this.page, this.size);
   }
 
   fetchSubjects(page: number, pageSize: number): void {
-    this.subjectService.getSubjects(page + 1, pageSize).subscribe(
+    this.subjectService.getSubjects(this.page, this.size).subscribe(
       (res) => {
         this.subjects = res.data;
         this.pagingInfo = { ...res, data: [] };
@@ -127,6 +127,12 @@ export class SubjectListComponent implements OnInit {
       .open<number>(
         new PolymorpheusComponent(SubjectAddComponent, this.injector)
       )
-      .subscribe({});
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.fetchSubjects(this.page, this.size);
+          }
+        },
+      });
   }
 }

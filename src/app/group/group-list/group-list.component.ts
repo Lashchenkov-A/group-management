@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, Injector } from '@angular/core';
 import { GroupService } from '../../../core/group/group.service';
 import { Group } from '../../../core/group/group.model';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { forkJoin, Observable, Subject, throwError } from 'rxjs';
+import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Overlay } from '@angular/cdk/overlay';
 import { UIService } from '../../../core/common/services/ui.service';
@@ -12,6 +12,8 @@ import { GroupEditComponent } from '../components/group-edit/group-edit.componen
 import { Paged } from '../../../core/common/models/pages.model';
 import { GroupAddComponent } from '../components/group-add/group-add.component';
 import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
+import { GroupReplaceComponent } from '../components/group-replace/group-replace/group-replace.component';
+import { LessonService } from '../../../core/lesson/lesson.service';
 
 @Component({
   selector: 'app-group-list',
@@ -21,7 +23,7 @@ import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
 export class GroupListComponent implements OnInit {
   group: any;
   page = 1;
-  size = 2;
+  size = 20;
   showDialog() {
     throw new Error('Method not implemented.');
   }
@@ -33,6 +35,7 @@ export class GroupListComponent implements OnInit {
   readonly columns: string[] = ['name', 'actions'];
 
   constructor(
+    private lessonService: LessonService,
     private groupService: GroupService,
     private readonly ui: UIService,
     @Inject(Router) private readonly router: Router,
@@ -42,7 +45,7 @@ export class GroupListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchGroups(1, 2);
+    this.fetchGroups(1, 20);
   }
 
   ngOnDestroy(): void {
@@ -51,13 +54,13 @@ export class GroupListComponent implements OnInit {
   }
 
   onPagination({ page, size }: TuiTablePaginationEvent): void {
-    this.page = page;
+    this.page = page + 1;
     this.size = size;
     this.fetchGroups(this.page, this.size);
   }
 
   fetchGroups(page: number, pageSize: number): void {
-    this.groupService.getGroups(page + 1, pageSize).subscribe(
+    this.groupService.getGroups(this.page, this.size).subscribe(
       (res) => {
         this.groups = res.data;
         this.pagingInfo = { ...res, data: [] };
@@ -68,25 +71,65 @@ export class GroupListComponent implements OnInit {
 
   deleteGroup(group: Group): void {
     const id = group.id;
-    this.openConfirmationDialog(group.name)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isConfirmed: boolean) => {
-        if (isConfirmed) {
-          this.loading[id] = true;
-          this.groupService.deleteGroup(id).subscribe({
-            next: () => {
-              this.ui.showAlert(`Группа ${group.name} успешно удалена`);
-              this.fetchGroups(this.page, this.size);
-              delete this.loading[id];
-            },
-            error: (error) => {
-              this.ui.showAlert(`Ошибка при запросе:${error}`, true);
-              console.error(error);
-              delete this.loading[id];
-            },
+    this.groupService.checkGroupUsage(id).subscribe((result) => {
+      if (result.used) {
+        this.dialogs
+          .open<number | boolean>(
+            new PolymorpheusComponent(GroupReplaceComponent, this.injector),
+            {
+              data: result.lessons,
+              label: `Внимание!`,
+              size: 'm',
+            }
+          )
+          .subscribe((newGroupId) => {
+            if (newGroupId === true) {
+              this.groupService.deleteGroup(id).subscribe({
+                next: () => {
+                  this.ui.showAlert(
+                    `Группа ${group.name} и связанные с ней уроки успешно удалены`
+                  );
+                  this.fetchGroups(this.page, this.size);
+                },
+                error: (error) => {
+                  this.ui.showAlert(`Ошибка при удалении: ${error}`, true);
+                  console.error(error);
+                },
+              });
+            } else if (newGroupId) {
+              this.updateLessons(result.lessons, newGroupId).subscribe(() => {
+                this.groupService.deleteGroup(id).subscribe({
+                  next: () => {
+                    this.ui.showAlert(`Группа ${group.name} успешно удалена`);
+                    this.fetchGroups(this.page, this.size);
+                  },
+                  error: (error) => {
+                    this.ui.showAlert(`Ошибка при удалении: ${error}`, true);
+                    console.error(error);
+                  },
+                });
+              });
+            }
           });
-        }
-      });
+      } else {
+        this.openConfirmationDialog(group.name)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((isConfirmed: boolean) => {
+            if (isConfirmed) {
+              this.groupService.deleteGroup(id).subscribe({
+                next: () => {
+                  this.ui.showAlert(`Группа ${group.name} успешно удалена`);
+                  this.fetchGroups(this.page, this.size);
+                },
+                error: (error) => {
+                  this.ui.showAlert(`Ошибка при удалении: ${error}`, true);
+                  console.error(error);
+                },
+              });
+            }
+          });
+      }
+    });
   }
 
   openConfirmationDialog(groupName: string) {
@@ -116,9 +159,42 @@ export class GroupListComponent implements OnInit {
         },
       });
   }
+
   openAddGroup(group: Group) {
     this.dialogs
       .open<number>(new PolymorpheusComponent(GroupAddComponent, this.injector))
-      .subscribe({});
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.fetchGroups(this.page, this.size);
+          }
+        },
+      });
+  }
+
+  updateLessons(lessons: any[], newGroupId: number): Observable<any> {
+    const lessonObservables = lessons.map((lesson) =>
+      this.lessonService.getLessonDetails(lesson.id)
+    );
+
+    return forkJoin(lessonObservables).pipe(
+      map((fullLessons) =>
+        fullLessons.map((fullLesson) => ({
+          ...fullLesson,
+          groupId: newGroupId,
+        }))
+      ),
+      map((updatedLessons) =>
+        updatedLessons.map((updatedLesson) =>
+          this.lessonService.editLesson(updatedLesson.id, updatedLesson)
+        )
+      ),
+      switchMap((updateObservables) => forkJoin(updateObservables)),
+      tap(() => this.ui.showAlert('Уроки успешно обновлены')),
+      catchError((error) => {
+        this.ui.showAlert(`Ошибка при обновлении уроков: ${error}`, true);
+        return throwError(error);
+      })
+    );
   }
 }

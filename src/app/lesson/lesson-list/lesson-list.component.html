@@ -8,16 +8,16 @@
   <tui-table>
     <thead tuiThGroup>
       <tr>
-        <th tuiTh>Year</th>
-        <th tuiTh>Week</th>
-        <th tuiTh>Day</th>
-        <th tuiTh>Start Time</th>
-        <th tuiTh>End Time</th>
-        <th tuiTh>Teacher</th>
-        <th tuiTh>Group</th>
-        <th tuiTh>Subject</th>
-        <th tuiTh>Office</th>
-        <th tuiTh>Actions</th>
+        <th tuiTh>Год</th>
+        <th tuiTh>Неделя</th>
+        <th tuiTh>День</th>
+        <th tuiTh>Время начала</th>
+        <th tuiTh>Время конца</th>
+        <th tuiTh>Преподаватель</th>
+        <th tuiTh>Группа</th>
+        <th tuiTh>Предмет</th>
+        <th tuiTh>Кабинет</th>
+        <th tuiTh>Действие</th>
       </tr>
     </thead>
     <tbody>
@@ -63,7 +63,7 @@
               [page]="page"
               [size]="size"
               [total]="pagingInfo.total"
-              [items]="[2, 5, 10, 20]"
+              [items]="[20, 25, 30, 35]"
               (paginationChange)="onPagination($event)"
             ></tui-table-pagination>
           </div>

@@ -13,7 +13,7 @@ export class SubjectService {
 
   constructor(private http: HttpClient) {}
 
-  getSubjects(page: number = 1, pageSize = 10): Observable<Paged<Subjects>> {
+  getSubjects(page: number = 1, pageSize = 20): Observable<Paged<Subjects>> {
     let params = new HttpParams();
     params = params.append('page', page);
     params = params.append('pageSize', pageSize);

@@ -22,7 +22,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
   lessons: Lesson[] = [];
   office: any;
   page = 1;
-  size = 2;
+  size = 20;
   loading: { [key: number]: boolean } = {};
   pagingInfo: Paged<void> | null = null;
   private readonly destroy$ = new Subject<void>();
@@ -40,7 +40,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.fetchLessons(1, 10);
+    this.fetchLessons(1, 20);
   }
 
   ngOnDestroy(): void {
@@ -49,13 +49,13 @@ export class LessonListComponent implements OnInit, OnDestroy {
   }
 
   onPagination({ page, size }: TuiTablePaginationEvent): void {
-    this.page = page;
+    this.page = page + 1;
     this.size = size;
     this.fetchLessons(this.page, this.size);
   }
 
   fetchLessons(page: number, pageSize: number): void {
-    this.lessonService.getLessons(page + 1, pageSize).subscribe(
+    this.lessonService.getLessons(this.page, this.size).subscribe(
       (res) => {
         this.lessons = res.data;
         this.pagingInfo = { ...res, data: [] };
@@ -74,7 +74,11 @@ export class LessonListComponent implements OnInit, OnDestroy {
     );
 
     dialogRef.subscribe({
-      next: (data) => {},
+      next: (data) => {
+        if (data) {
+          this.fetchLessons(this.page, this.size);
+        }
+      },
     });
   }
 

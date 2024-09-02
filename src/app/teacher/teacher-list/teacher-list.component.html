@@ -12,11 +12,11 @@
   <table tuiTable class="table" [columns]="columns">
     <thead>
       <tr tuiThTeacher>
-        <th tuiTh [resizable]="true">firstName</th>
-        <th tuiTh [resizable]="true">secondName</th>
-        <th tuiTh [resizable]="true">lastName</th>
-        <th tuiTh [resizable]="true">jobRole</th>
-        <th tuiTh>Actions</th>
+        <th tuiTh [resizable]="true">Имя</th>
+        <th tuiTh [resizable]="true">Отчество</th>
+        <th tuiTh [resizable]="true">Фамилия</th>
+        <th tuiTh [resizable]="true">Должность</th>
+        <th tuiTh>Действие</th>
       </tr>
     </thead>
     <tbody tuiTbody [data]="teachers">
@@ -65,7 +65,7 @@
               [page]="page"
               [size]="size"
               [total]="pagingInfo.total"
-              [items]="[2, 5, 10, 20]"
+              [items]="[20, 25, 30, 35]"
               (paginationChange)="onPagination($event)"
             ></tui-table-pagination>
           </div>

@@ -12,9 +12,9 @@
   <table tuiTable class="table" [columns]="columns">
     <thead>
       <tr tuiThOffice>
-        <th tuiTh [resizable]="true">Corpus Number</th>
-        <th tuiTh [resizable]="true">Classroom Number</th>
-        <th tuiTh>Actions</th>
+        <th tuiTh [resizable]="true">Номер корпуса</th>
+        <th tuiTh [resizable]="true">Номер кабинета</th>
+        <th tuiTh>Действие</th>
       </tr>
     </thead>
     <tbody tuiTbody [data]="offices">
@@ -57,7 +57,7 @@
               [page]="page"
               [size]="size"
               [total]="pagingInfo.total"
-              [items]="[2, 5, 10, 20]"
+              [items]="[20, 25, 30, 35]"
               (paginationChange)="onPagination($event)"
             ></tui-table-pagination>
           </div>

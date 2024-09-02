@@ -13,7 +13,7 @@ export class OfficeService {
 
   constructor(private http: HttpClient) {}
 
-  getOffices(page: number = 1, pageSize = 2): Observable<Paged<Office>> {
+  getOffices(page: number = 1, pageSize = 20): Observable<Paged<Office>> {
     let params = new HttpParams();
     params = params.append('page', page);
     params = params.append('pageSize', pageSize);

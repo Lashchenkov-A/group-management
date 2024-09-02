@@ -11,8 +11,8 @@
   <table tuiTable class="table" [columns]="columns">
     <thead>
       <tr tuiThGroup>
-        <th tuiTh [resizable]="true">Group Name</th>
-        <th tuiTh></th>
+        <th tuiTh [resizable]="true">Номер группы</th>
+        <th tuiTh>Действие</th>
       </tr>
     </thead>
     <tbody tuiTbody [data]="groups">
@@ -52,7 +52,7 @@
               [page]="page"
               [size]="size"
               [total]="pagingInfo.total"
-              [items]="[2, 5, 10, 20]"
+              [items]="[20, 25, 30, 35]"
               (paginationChange)="onPagination($event)"
             ></tui-table-pagination>
           </div>

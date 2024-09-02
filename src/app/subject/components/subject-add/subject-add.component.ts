@@ -3,6 +3,8 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   Inject,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { SubjectService } from '../../../../core/subject/subject.service';
@@ -20,6 +22,8 @@ import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 export class SubjectAddComponent implements OnInit {
   subject: SubjectFormModel = { name: '' };
 
+  @Output() subjectAdded = new EventEmitter<SubjectFormModel>();
+
   constructor(
     private subjectService: SubjectService,
     public router: Router,
@@ -33,8 +37,9 @@ export class SubjectAddComponent implements OnInit {
   addSubject(subject: SubjectFormModel): void {
     if (subject.name.trim() !== '') {
       this.subjectService.addSubject(subject).subscribe(
-        () => {
-          this.ui.showAlert('Предмет успешно добавлена!');
+        (newSubject) => {
+          this.ui.showAlert('Предмет успешно добавлен!');
+          this.subjectAdded.emit(newSubject);
           this.context.completeWith(true);
         },
         (error) => {

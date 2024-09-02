@@ -16,7 +16,7 @@ export class TeacherService {
 
   getTeachers(
     page: number = 1,
-    pageSize: number = 2
+    pageSize: number = 20
   ): Observable<Paged<Teacher>> {
     let params = new HttpParams();
     params = params.append('page', page.toString());

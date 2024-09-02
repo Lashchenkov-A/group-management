@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Group } from './group.model';
 import { environment } from '../../environment/environment';
 import { Paged } from '../common/models/pages.model';
+import { Lesson } from '../lesson/lesson.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class GroupService {
 
   constructor(private http: HttpClient) {}
 
-  getGroups(page: number = 1, pageSize = 2): Observable<Paged<Group>> {
+  getGroups(page: number = 1, pageSize = 20): Observable<Paged<Group>> {
     let params = new HttpParams();
     params = params.append('page', page);
     params = params.append('pageSize', pageSize);
@@ -34,5 +35,13 @@ export class GroupService {
 
   updateGroup(id: number, model: { name: string }): Observable<void> {
     return this.http.put<void>(`${this.apiPath}/${id}`, model);
+  }
+
+  checkGroupUsage(
+    groupId: number
+  ): Observable<{ used: boolean; lessons: Lesson[] }> {
+    return this.http.get<{ used: boolean; lessons: Lesson[] }>(
+      `${this.apiPath}/check-deletion/${groupId}`
+    );
   }
 }
