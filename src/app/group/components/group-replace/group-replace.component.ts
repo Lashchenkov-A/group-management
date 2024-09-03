@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TuiDialogService, TuiDialogContext } from '@taiga-ui/core';
-import { GroupService } from '../../../../../core/group/group.service';
-import { Group } from '../../../../../core/group/group.model';
-import { LessonService } from '../../../../../core/lesson/lesson.service';
-import { UIService } from '../../../../../core/common/services/ui.service';
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
 import { Subject } from 'rxjs';
-import { Paged } from '../../../../../core/common/models/pages.model';
+import { Group } from '../../../../core/group/group.model';
+import { Paged } from '../../../../core/common/models/pages.model';
+import { UIService } from '../../../../core/common/services/ui.service';
+import { GroupService } from '../../../../core/group/group.service';
+import { LessonService } from '../../../../core/lesson/lesson.service';
 
 @Component({
   selector: 'app-group-replace',
@@ -23,10 +23,12 @@ export class GroupReplaceComponent implements OnInit {
   size = 20;
 
   constructor(
+    @Inject(POLYMORPHEUS_CONTEXT)
     private readonly context: TuiDialogContext<boolean>,
     private groupService: GroupService,
     private lessonService: LessonService,
-    private readonly ui: UIService
+    private readonly ui: UIService,
+    @Inject(TuiDialogService) private readonly dialogs: TuiDialogService
   ) {
     this.groupForm = new FormGroup({
       groupId: new FormControl(null),

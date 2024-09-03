@@ -9,25 +9,31 @@
       <div class="login-container">
         <app-main-navigation></app-main-navigation>
         <ng-container *ngIf="isAuthenticated$ | async; else loginTemplate">
-          <tui-button
-            class="logout-button"
-            appearance="icon"
-            (click)="logout()"
-          >
-            <p>Выйти</p>
-            <lucide-icon name="log-out"></lucide-icon>
-          </tui-button>
+          <nav class="navbar">
+            <tui-button
+              class="logout-button"
+              appearance="icon"
+              (click)="logout()"
+              class="nav-item"
+            >
+              <p>Выйти</p>
+              <lucide-icon name="log-out"></lucide-icon>
+            </tui-button>
+          </nav>
         </ng-container>
         <div class="login">
           <ng-template #loginTemplate>
-            <tui-button
-              class="login-button"
-              appearance="icon"
-              (click)="openAuthModal()"
-            >
-              <p>Войти</p>
-              <lucide-icon name="log-in"></lucide-icon>
-            </tui-button>
+            <nav class="navbar">
+              <tui-button
+                class="login-button"
+                appearance="icon"
+                (click)="openAuthModal()"
+                class="nav-item"
+              >
+                <p>Войти</p>
+                <lucide-icon name="log-in"></lucide-icon>
+              </tui-button>
+            </nav>
           </ng-template>
         </div>
       </div>

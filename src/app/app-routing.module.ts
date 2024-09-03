@@ -6,8 +6,8 @@ import { SubjectListComponent } from './subject/subject-list/subject-list.compon
 import { OfficeListComponent } from './office/office-list/office-list.component';
 import { TeacherListComponent } from './teacher/teacher-list/teacher-list.component';
 import { UserScheduleComponent } from './schedule/user-schedule/user-schedule.component';
-import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule/group-schedule.component';
 import { AdminGuard } from './components/auth/admin.guard';
+import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

@@ -10,3 +10,35 @@
   display: flex;
   align-items: center;
 }
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #277db4;
+  padding: 10px 0;
+  margin: 0;
+  border-radius: 4px;
+}
+
+.nav-item {
+  color: #000000;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.nav-item i {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.nav-item:hover {
+  background-color: #1f6294;
+  border-radius: 4px;
+}
+
+.nav-item span {
+  display: block;
+}

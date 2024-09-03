@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import moment from 'moment';
-import { ScheduleService } from '../../../../core/schedule/schedule.service';
+import { ScheduleService } from '../../../core/schedule/schedule.service';
 
 @Component({
   selector: 'app-group-schedule',
@@ -147,7 +147,26 @@ export class GroupScheduleComponent implements OnInit {
       (item) =>
         this.getDayOfWeek(item.dayOfWeek) === day && item.startTime === time
     );
-    return entry ? entry.subjectName : '';
+
+    if (entry) {
+      const subjectName = entry.subjectName || 'Предмет не указан';
+      const teacherName =
+        `${entry.firstName || ''} ${entry.secondName || ''} ${
+          entry.lastName || ''
+        }, ${entry.jobRole || ''}`.trim() || 'Преподаватель не указан';
+      const office = `${entry.corpusNumber || ''}` || 'Аудитория не указана';
+      const classroomNumber = entry.classroomNumber || '';
+
+      return `
+        <div class="lesson">
+          <div class="subject">${subjectName}</div>
+          <div class="teacher">${teacherName}</div>
+          <div class="office"> Корпус ${office} аудитория ${classroomNumber}</div>
+        </div>
+      `;
+    }
+
+    return '';
   }
 
   getDayOfWeek(dayOfWeek: number): string {

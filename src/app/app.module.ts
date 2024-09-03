@@ -56,7 +56,6 @@ import { TeacherAddComponent } from './teacher/component/teacher-add/teacher-add
 import { TeacherEditComponent } from './teacher/component/teacher-edit/teacher-edit.component';
 import { TeacherFormComponent } from './teacher/component/teacher-form/teacher-form.component';
 import { UserScheduleComponent } from './schedule/user-schedule/user-schedule.component';
-import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule/group-schedule.component';
 import { AuthInterceptor } from '../core/auth/auth.interceptor';
 import { AuthModalComponent } from './components/auth/auth-modal/auth-modal.component';
 import { AuthService } from '../core/auth/auth.service';
@@ -71,10 +70,13 @@ import {
   PenTool,
   UserRound,
   UsersRound,
+  CircleChevronLeft,
+  CircleChevronRight,
 } from 'lucide-angular';
 import { of } from 'rxjs';
 import { RegisterModalComponent } from './components/auth/register-modal/register-modal.component';
-import { GroupReplaceComponent } from './group/components/group-replace/group-replace/group-replace.component';
+import { GroupReplaceComponent } from './group/components/group-replace/group-replace.component';
+import { GroupScheduleComponent } from './schedule/group-schedule/group-schedule.component';
 
 @NgModule({
   declarations: [
@@ -101,10 +103,10 @@ import { GroupReplaceComponent } from './group/components/group-replace/group-re
     TeacherEditComponent,
     TeacherFormComponent,
     UserScheduleComponent,
-    GroupScheduleComponent,
     AuthModalComponent,
     RegisterModalComponent,
     GroupReplaceComponent,
+    GroupScheduleComponent,
   ],
   imports: [
     CommonModule,
@@ -140,6 +142,8 @@ import { GroupReplaceComponent } from './group/components/group-replace/group-re
       UserRound,
       UsersRound,
       PenTool,
+      CircleChevronLeft,
+      CircleChevronRight,
     }),
     ...TuiFiles,
     TuiCheckbox,

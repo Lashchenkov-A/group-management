@@ -12,13 +12,13 @@ import { GroupEditComponent } from '../components/group-edit/group-edit.componen
 import { Paged } from '../../../core/common/models/pages.model';
 import { GroupAddComponent } from '../components/group-add/group-add.component';
 import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
-import { GroupReplaceComponent } from '../components/group-replace/group-replace/group-replace.component';
 import { LessonService } from '../../../core/lesson/lesson.service';
+import { GroupReplaceComponent } from '../components/group-replace/group-replace.component';
 
 @Component({
   selector: 'app-group-list',
   templateUrl: './group-list.component.html',
-  styleUrls: ['./group-list.component.scss'],
+  styleUrls: ['./group-list.component.css'],
 })
 export class GroupListComponent implements OnInit {
   group: any;
@@ -160,7 +160,7 @@ export class GroupListComponent implements OnInit {
       });
   }
 
-  openAddGroup(group: Group) {
+  openAddGroup() {
     this.dialogs
       .open<number>(new PolymorpheusComponent(GroupAddComponent, this.injector))
       .subscribe({

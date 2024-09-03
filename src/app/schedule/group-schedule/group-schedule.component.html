@@ -1,8 +1,12 @@
 <div class="body_container">
   <section class="search_wrap">
     <div class="search">
-      <div class="searchForm">
-        <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+      <div>
+        <form
+          [formGroup]="searchForm"
+          (ngSubmit)="onSearch()"
+          class="searchForm"
+        >
           <input
             type="text"
             id="searchInput"
@@ -24,11 +28,11 @@
           name="date"
           (click)="changeWeek(-1)"
         >
-          ˂
+          <lucide-icon name="circle-chevron-left"></lucide-icon>
         </button>
         <p id="currentWeekDate">{{ currentWeekDate }}</p>
         <button type="button" id="dateNext" name="date" (click)="changeWeek(1)">
-          ˃
+          <lucide-icon name="circle-chevron-right"></lucide-icon>
         </button>
       </div>
     </div>
