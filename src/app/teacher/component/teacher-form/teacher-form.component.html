@@ -99,6 +99,18 @@
     <h4>Предварительный просмотр новой фотографии:</h4>
     <img [src]="previewUrl" alt="New Teacher Photo" class="preview-photo" />
   </div>
+  <div *ngIf="!teacher.photoPath && !previewUrl" class="default-photo">
+    <img
+      src="assets/img/стоковое фото.jpg"
+      alt="Default Photo"
+      class="default-photo-img"
+    />
+  </div>
+  <label>
+    <input type="checkbox" [(ngModel)]="removePhoto" name="removePhoto" />
+    Удалить фото
+  </label>
+
   <button appearance="primary" tuiButton type="submit" class="btn">
     <img [src]="icon" class="btn-icon" /> Сохранить
   </button>

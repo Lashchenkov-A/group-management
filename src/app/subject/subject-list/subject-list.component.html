@@ -1,10 +1,6 @@
 <div class="subject-list-container">
   <tui-table-bar>
-    <tui-button
-      class="add-button"
-      appearance="icon"
-      (click)="openAddSubject(subject)"
-    >
+    <tui-button class="add-button" appearance="icon" (click)="openAddSubject()">
       <tui-icon icon="@tui.circle-plus"></tui-icon>
     </tui-button>
   </tui-table-bar>
@@ -16,23 +12,29 @@
       </tr>
     </thead>
     <tbody tuiTbody [data]="subjects">
-      <tr *ngFor="let subject of subjects" tuiTr>
+      <tr
+        *ngFor="let subject of subjects"
+        tuiTr
+        [class.deleted]="subject.isDeleted"
+      >
         <td *tuiCell="'name'" tuiTd>
           {{ subject.name }}
         </td>
         <td *tuiCell="'actions'" tuiTd>
-          <tui-button
+          <button
             appearance="icon"
             (click)="openEditSubject(subject)"
             class="edit-button"
+            [disabled]="subject.isDeleted"
           >
             <lucide-icon name="pencil"></lucide-icon>
-          </tui-button>
+          </button>
 
-          <tui-button
+          <button
             appearance="icon"
             (click)="deleteSubject(subject)"
             class="delete-button"
+            [disabled]="subject.isDeleted"
           >
             <lucide-icon name="trash-2"></lucide-icon>
 
@@ -40,7 +42,7 @@
               <app-loader></app-loader>
             </ng-container>
             <ng-template #notLoading></ng-template>
-          </tui-button>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -60,5 +62,13 @@
       </tr>
     </tfoot>
   </table>
-  <div></div>
+  <div class="checkbox-container">
+    <input
+      tuiCheckbox
+      type="checkbox"
+      [(ngModel)]="IsDeleted"
+      (change)="fetchSubjects(page, size)"
+    />
+    Показать удаленные сущности
+  </div>
 </div>

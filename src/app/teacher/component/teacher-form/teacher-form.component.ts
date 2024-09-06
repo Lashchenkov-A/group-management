@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { TuiFileLike } from '@taiga-ui/kit';
 import {
@@ -25,7 +25,7 @@ export interface TeacherFormModel {
 @Component({
   selector: 'app-teacher-form',
   templateUrl: './teacher-form.component.html',
-  styleUrl: './teacher-form.component.css',
+  styleUrls: ['./teacher-form.component.css'],
 })
 export class TeacherFormComponent {
   @Input() icon: string = '';
@@ -47,18 +47,14 @@ export class TeacherFormComponent {
     switchMap((file) => (file ? this.makeRequest(file) : of(null)))
   );
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private teacherService: TeacherService,
-    private ui: UIService
-  ) {}
+  removePhoto: boolean = false;
+  constructor(private teacherService: TeacherService, private ui: UIService) {}
 
   setPreviewFromFile(file: File): void {
     const reader = new FileReader();
 
     reader.onload = (e) => {
       this.previewUrl = e.target?.result;
-      this.cdr.detectChanges();
     };
 
     reader.onerror = (e) => {
@@ -74,12 +70,14 @@ export class TeacherFormComponent {
 
   removeFile(): void {
     this.control.setValue(null);
+    this.previewUrl = null;
   }
 
   clearRejected(): void {
     this.removeFile();
     this.rejectedFiles$.next(null);
   }
+
   protected readonly failedFiles$ = new Subject<TuiFileLike | null>();
 
   makeRequest(file: TuiFileLike): Observable<TuiFileLike | null> {
@@ -110,6 +108,10 @@ export class TeacherFormComponent {
 
   public handleSubmit(event: Event): void {
     event.preventDefault();
+
+    if (this.removePhoto) {
+      this.teacher.photoPath = undefined;
+    }
     this.onSubmit(this.teacher);
   }
 }

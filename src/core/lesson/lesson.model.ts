@@ -12,6 +12,7 @@ export interface Lesson {
   classroomNumber: number;
   subjectId: number;
   subjectName: string;
+  subjectDeleted: boolean;
   teacherId: number;
   teacher: {
     firstName: string;

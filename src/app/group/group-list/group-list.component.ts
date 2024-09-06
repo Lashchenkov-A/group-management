@@ -77,7 +77,7 @@ export class GroupListComponent implements OnInit {
           .open<number | boolean>(
             new PolymorpheusComponent(GroupReplaceComponent, this.injector),
             {
-              data: result.lessons,
+              data: { groupIdToDelete: id },
               label: `Внимание!`,
               size: 'm',
             }
@@ -96,7 +96,7 @@ export class GroupListComponent implements OnInit {
                   console.error(error);
                 },
               });
-            } else if (newGroupId) {
+            } else if (typeof newGroupId === 'number') {
               this.updateLessons(result.lessons, newGroupId).subscribe(() => {
                 this.groupService.deleteGroup(id).subscribe({
                   next: () => {

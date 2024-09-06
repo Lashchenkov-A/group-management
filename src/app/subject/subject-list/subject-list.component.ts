@@ -18,6 +18,7 @@ import { SubjectEditComponent } from '../components/subject-edit/subject-edit.co
 import { Subjects } from '../../../core/subject/subject.model';
 import { SubjectAddComponent } from '../components/subject-add/subject-add.component';
 import { TuiTablePaginationEvent } from '@taiga-ui/addon-table';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-subject-list',
@@ -28,9 +29,7 @@ export class SubjectListComponent implements OnInit {
   subject: any;
   page = 1;
   size = 20;
-  showDialog() {
-    throw new Error('Method not implemented.');
-  }
+  IsDeleted = false;
   subjects: Subjects[] = [];
   pagingInfo: Paged<void> | null = null;
   loading: { [key: number]: boolean } = {};
@@ -48,7 +47,7 @@ export class SubjectListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchSubjects(1, 20);
+    this.fetchSubjects(this.page, this.size);
   }
 
   ngOnDestroy(): void {
@@ -63,9 +62,17 @@ export class SubjectListComponent implements OnInit {
   }
 
   fetchSubjects(page: number, pageSize: number): void {
-    this.subjectService.getSubjects(this.page, this.size).subscribe(
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString())
+      .set('IsDeleted', this.IsDeleted.toString());
+
+    this.subjectService.getSubjects(page, pageSize, this.IsDeleted).subscribe(
       (res) => {
-        this.subjects = res.data;
+        this.subjects = res.data.map((subject) => ({
+          ...subject,
+          isDeleted: subject.isDeleted || false,
+        }));
         this.pagingInfo = { ...res, data: [] };
       },
       (error) => console.error('Ошибка при запросе:', error)
@@ -122,7 +129,8 @@ export class SubjectListComponent implements OnInit {
         },
       });
   }
-  openAddSubject(subject: Subjects) {
+
+  openAddSubject() {
     this.dialogs
       .open<number>(
         new PolymorpheusComponent(SubjectAddComponent, this.injector)

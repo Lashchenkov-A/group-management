@@ -13,10 +13,16 @@ export class SubjectService {
 
   constructor(private http: HttpClient) {}
 
-  getSubjects(page: number = 1, pageSize = 20): Observable<Paged<Subjects>> {
-    let params = new HttpParams();
-    params = params.append('page', page);
-    params = params.append('pageSize', pageSize);
+  getSubjects(
+    page: number = 1,
+    pageSize = 20,
+    IsDeleted: boolean
+  ): Observable<Paged<Subjects>> {
+    let params = new HttpParams()
+      .set('page', page)
+      .set('pageSize', pageSize)
+      .set('IsDeleted', IsDeleted.toString());
+
     return this.http.get<Paged<Subjects>>(this.apiPath, { params: params });
   }
 

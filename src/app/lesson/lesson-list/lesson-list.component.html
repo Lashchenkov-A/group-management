@@ -33,7 +33,10 @@
           {{ lesson.teacher.lastName }}
         </td>
         <td tuiTd>{{ lesson.groupName }}</td>
-        <td tuiTd>{{ lesson.subjectName }}</td>
+        <td tuiTd>
+          {{ lesson.subjectName }}
+          <span *ngIf="lesson.subjectDeleted" style="color: red">(удален)</span>
+        </td>
         <td tuiTd>
           Корпус {{ lesson.corpusNumber }} Кабинет {{ lesson.classroomNumber }}
         </td>

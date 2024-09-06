@@ -9,6 +9,9 @@ import { UIService } from '../../../../core/common/services/ui.service';
 import { GroupService } from '../../../../core/group/group.service';
 import { LessonService } from '../../../../core/lesson/lesson.service';
 
+interface DialogData {
+  groupIdToDelete: number;
+}
 @Component({
   selector: 'app-group-replace',
   templateUrl: './group-replace.component.html',
@@ -24,7 +27,7 @@ export class GroupReplaceComponent implements OnInit {
 
   constructor(
     @Inject(POLYMORPHEUS_CONTEXT)
-    private readonly context: TuiDialogContext<boolean>,
+    private readonly context: TuiDialogContext<void, DialogData>,
     private groupService: GroupService,
     private lessonService: LessonService,
     private readonly ui: UIService,
@@ -37,7 +40,12 @@ export class GroupReplaceComponent implements OnInit {
 
   ngOnInit(): void {
     this.lessonService.getLookupData('group').subscribe((data) => {
-      this.groups = this.parseGroups(data);
+      const groupIdToDelete = this.context.data?.groupIdToDelete;
+      if (groupIdToDelete !== undefined) {
+        this.groups = this.parseGroups(data).filter(
+          (group) => group.id !== groupIdToDelete
+        );
+      }
     });
   }
 
@@ -62,36 +70,41 @@ export class GroupReplaceComponent implements OnInit {
 
     const selectedGroupId = this.groupForm.get('groupId')?.value;
 
-    if (selectedGroupId) {
-      const selectedGroup = this.groups.find(
-        (group) => group.id === selectedGroupId
-      );
-
-      if (selectedGroup) {
-        this.openConfirmationDialog().subscribe((isConfirmed: boolean) => {
-          if (isConfirmed) {
-            this.deleteGroupAndLessons(selectedGroup);
-
-            this.context.completeWith(true);
+    this.openConfirmationDialog().subscribe((isConfirmed: boolean) => {
+      if (isConfirmed) {
+        if (!selectedGroupId) {
+          const groupIdToDelete = this.context.data?.groupIdToDelete;
+          if (groupIdToDelete !== undefined) {
+            this.deleteGroupAndLessonsById(groupIdToDelete);
           }
-        });
-      } else {
-        this.ui.showAlert('Выбранная группа не найдена.', true);
-      }
-    } else {
-      this.openConfirmationDialog().subscribe((isConfirmed: boolean) => {
-        if (isConfirmed) {
-          this.context.completeWith(true);
+        } else {
+          const selectedGroup = this.groups.find(
+            (group) => group.id === selectedGroupId
+          );
+
+          if (selectedGroup) {
+            this.deleteGroupAndLessons(selectedGroup);
+          } else {
+            this.ui.showAlert('Выбранная группа не найдена.', true);
+          }
         }
-      });
-    }
+      }
+    });
   }
 
-  openConfirmationDialog() {
-    return this.ui.confirmModal(
-      'Подтверждение удаления',
-      'Вы действительно хотите удалить группу и все связанные пары?'
-    );
+  deleteGroupAndLessonsById(groupId: number): void {
+    this.groupService.deleteGroup(groupId).subscribe({
+      next: () => {
+        this.ui.showAlert('Группа и связанные с ней данные успешно удалены.');
+        this.fetchGroups(this.page, this.size);
+        this.context.completeWith();
+        this.fetchGroups(this.page, this.size);
+      },
+      error: (error) => {
+        this.ui.showAlert(`Ошибка при удалении группы: ${error}`, true);
+        console.error(error);
+      },
+    });
   }
 
   deleteGroupAndLessons(group: Group): void {
@@ -109,6 +122,15 @@ export class GroupReplaceComponent implements OnInit {
         console.error(error);
       },
     });
+
+    this.context.completeWith();
+  }
+
+  openConfirmationDialog() {
+    return this.ui.confirmModal(
+      'Подтверждение удаления',
+      'Вы действительно хотите удалить группу и все связанные пары?'
+    );
   }
 
   fetchGroups(page: number, pageSize: number): void {

@@ -11,7 +11,8 @@
   margin-bottom: 20px;
 }
 
-.preview-photo {
+.preview-photo,
+.default-photo-img {
   max-width: 200px;
   max-height: 200px;
   border-radius: 5px;

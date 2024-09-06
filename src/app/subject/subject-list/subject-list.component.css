@@ -46,13 +46,20 @@
   box-shadow: 0 8px 12px 0px black;
 }
 
+.delete-button,
 .edit-button {
-  cursor: pointer;
-}
-
-.delete-button {
   background: none;
   cursor: pointer;
   padding: 0;
   margin: 5px;
+  border: none;
+}
+.deleted {
+  opacity: 0.9;
+  color: gray;
+}
+
+.checkbox-container {
+  font-size: 20px;
+  display: flex;
 }
